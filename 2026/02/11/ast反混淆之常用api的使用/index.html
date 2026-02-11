@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf8"/>
+    
+    <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+    <title>
+      
+        ast反混淆之常用api的使用 | PokerS
+      
+    </title>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    
+      <link rel="apple-touch-icon"
+            sizes="180x180"
+            href="/images/apple-touch-icon.png"/>
+    
+    
+      <link rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/images/favicon-32x32.png"/>
+    
+    
+      <link rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/images/favicon-16x16.png"/>
+    
+    
+      <link rel="mask-icon"
+            href="/images/logo.svg"
+            color=""/>
+    
+    
+    
+      
+  <style>
+    @font-face {
+        font-family:sourceHanSerif;
+        src: url(/font/normal.ttf);
+        font-weight: normal;
+    }
+  </style>
+
+  <style>
+    @font-face {
+        font-family:sourceHanSerif;
+        src: url(/font/bold.ttf);
+        font-weight: bold;
+    }
+  </style>
+
+
+    
+    <link rel="stylesheet"
+          type="text/css"
+          href='/css/layout.css'/>
+    
+    
+  <link rel="stylesheet" type="text/css" href="/css/post.css"/>
+  
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"/>
+    
+    
+    <div class=head>
+      <div class="nav">
+        <a href='/' class="nav-logo">
+          <img alt="logo" height="60px" width="60px" src="/images/logo.svg"/>
+        </a>
+        <input id="navBtn" type="checkbox"/>
+        <div class="nav-right">
+          
+            <div class="search-outer" id="algolia-search"></div>
+          
+          <div class="nav-menu">
+            
+              
+                <a class="nav-menu-item" href="/feat">文章</a>
+              
+                <a class="nav-menu-item" href="/base">思考</a>
+              
+            
+            
+              <a class="nav-menu-item" href='/cv/'>简历</a>
+            
+          </div>
+        </div>
+        <label class="nav-btn" for="navBtn"></label>
+      </div>
+    </div>
+    <div class="body">
+      
+  <article class="post-content">
+    <div class="post-inner">
+      <div class="post-content__head">
+        <div class="post-title">ast反混淆之常用api的使用</div>
+        <div class="post-info">
+          
+  
+
+
+          <span class="post-date">2026-02-11</span>
+        </div>
+      </div>
+      
+      <div class="post-content__body">
+        
+          <div class="post-gallery">
+            
+          </div>
+        
+        <h1 id="ast反混淆杂谈（二）"><a href="#ast反混淆杂谈（二）" class="headerlink" title="ast反混淆杂谈（二）"></a>ast反混淆杂谈（二）</h1><p>本期我们主要探讨三个方向：<br>（1）Path<br>（2）types<br>（3）scope</p>
+<h2 id="Path"><a href="#Path" class="headerlink" title="Path"></a>Path</h2><h3 id="1-什么是Path"><a href="#1-什么是Path" class="headerlink" title="1.什么是Path"></a>1.什么是Path</h3><p>Path并不是 AST 树物理结构的一部分，而是遍历算法在运行时生成的对象。它是一个封装了 Node 的容器。它记录了从根节点（Root）到当前节点（Node）的所有连接信息。</p>
+<p>通常，我们会在<code>traverse</code>中使用它。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">traverse</span>(ast, &#123;</span><br><span class="line">    <span class="title class_">StringLiteral</span>: <span class="keyword">function</span> (<span class="params">path</span>) &#123;</span><br><span class="line">        <span class="comment">//无论你在定义函数时给参数起了什么名字，Babel 传进来的永远是那个刚创建好的 Path 对象</span></span><br><span class="line">        <span class="keyword">if</span> (path.<span class="property">node</span>.<span class="property">extra</span> &amp;&amp; path.<span class="property">node</span>.<span class="property">extra</span>.<span class="property">raw</span> !== path.<span class="property">node</span>.<span class="property">extra</span>.<span class="property">rawValue</span>) &#123;</span><br><span class="line">            path.<span class="title function_">replaceWith</span>(types.<span class="title function_">stringLiteral</span>(path.<span class="property">node</span>.<span class="property">extra</span>.<span class="property">rawValue</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这里举了处理如同这样的字符型字面量<br><code>&#39;\u5927\u5a01&#39;+&#39;\u5929\u9f99&#39;</code><br>通过ast反混淆的处理还原为了<code>大威天龙</code></p>
+<p>其中，就是通过<strong>遍历器</strong>和<strong>访客函数</strong>，找到所有类型为<code>StringLiteral</code>的节点，对其进行判断，从而可以定制化的进行处理。</p>
+<h3 id="2-什么是traverse"><a href="#2-什么是traverse" class="headerlink" title="2. 什么是traverse"></a>2. 什么是traverse</h3><p>我们可以从三个角度来讲解traverse的原理和作用</p>
+<ul>
+<li>行为本质：深度优先搜索 (DFS)<blockquote>
+<p>在底层逻辑上，<code>traverse</code> 执行的是 <code>Depth-First Search (DFS)</code>。它不是随机乱跑的，而是从根节点（Program）开始，像探险一样沿着树的分支一直走到最深处的叶子节点（比如一个数字或字符），然后再回溯。</p>
+</blockquote>
+</li>
+<li>设计模式：访问者模式<blockquote>
+<p>Element (元素)：指 AST 上的各个 Node。<br> Visitor (访问者)：访客函数。<br> Traverser (遍历器)：traverse 模块</p>
+</blockquote>
+</li>
+<li>运行状态：上下文驱动<blockquote>
+<p>traverse 不仅仅是“走过”这些节点，它在遍历的过程中，动态地维护着一整套上下文环境。 它每走一步，都会实时更新Path栈和Scope链</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="3-path的常用节点使用"><a href="#3-path的常用节点使用" class="headerlink" title="3. path的常用节点使用"></a>3. path的常用节点使用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">// --- 基础属性查询 ---</span><br><span class="line">// path.node          // [当前节点] 访问 Path 包装下的原始 AST 节点。</span><br><span class="line">// path.type          // [节点类型] 获取当前节点的字符串类型名（如 &#x27;Identifier&#x27;），等同于 path.node.type。</span><br><span class="line">// path.key           // [索引键名] 当前节点在父级容器中的属性名或数组索引（如 &#x27;left&#x27; 或 0）。</span><br><span class="line">// path.container     // [所属容器] 获取当前节点所在的父级属性对象或节点数组（包含自身及兄弟节点）。</span><br><span class="line"></span><br><span class="line">// --- 关联节点定位 ---</span><br><span class="line">// path.parent        // [父级节点] 直接获取父级 AST 节点（仅含数据）。</span><br><span class="line">// path.parentPath    // [父级路径] 获取父级的 NodePath 对象（可链式调用 path 方法，反混淆常用）。</span><br><span class="line">// path.scope         // [作用域句柄] 访问当前节点所属的词法作用域，用于变量绑定分析（Binding）和重命名。</span><br><span class="line"></span><br><span class="line">// --- 逻辑计算与判定 ---</span><br><span class="line">// path.evaluate()    // [静态分析] 尝试对表达式进行常量折叠计算，返回一个包含 &#123; confident, value &#125; 的结果对象。</span><br><span class="line">// path.toString()    // [代码还原] 将当前路径对应的 AST 子树反向生成为标准的源代码字符串。</span><br><span class="line"></span><br><span class="line">// --- 树状遍历与搜索 ---</span><br><span class="line">// path.findParent()      // [向上回溯] 递归查找符合条件的父级路径（不含自身），直到根节点。</span><br><span class="line">// path.find()            // [向上搜索] 从当前路径开始，递归向上查找符合条件的路径（含自身）。</span><br><span class="line">// path.getFunctionParent() // [函数溯源] 快速定位最近的一层函数类型父节点（如 FunctionDeclaration）。</span><br><span class="line">// path.traverse(visitor) // [局部遍历] 以当前节点为根，启动一个子级的深度优先搜索（DFS）流程。</span><br><span class="line"></span><br><span class="line">// --- 节点转换与操作 (反混淆核心) ---</span><br><span class="line">// path.replaceWith(node)          // [单节点替换] 用一个新的 AST 节点替换当前节点，保持树的拓扑结构一致。</span><br><span class="line">// path.replaceWithMultiple(nodes) // [多节点替换] 用一个节点数组替换当前单个节点（常用于将一行语句拆分为多行）。</span><br><span class="line">// path.replaceInline(nodes)       // [智能替换] 自动识别单/多节点并执行替换，是更通用的 API 封装。</span><br><span class="line">// path.remove()                   // [节点剪枝] 从 AST 树中物理删除当前节点，并自动修复父级引用。</span><br><span class="line">// path.insertBefore(nodes)        // [前序插入] 在当前节点同级的上方插入一个或多个节点。</span><br><span class="line">// path.insertAfter(nodes)         // [后续插入] 在当前节点同级的下方插入一个或多个节点。</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-综合运用"><a href="#4-综合运用" class="headerlink" title="4.综合运用"></a>4.综合运用</h3><p>我们还是使用刚才的那个例子来进行逐步解析，这个方法适用于解密函数的反混淆，控制流平坦化的扁平化处理，字符串十六进制的转换，代理函数的还原等。此处为字符串十六进制反混淆。</p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img12@main/2026/02/11/1770781801059-e52e035f-056c-4c60-af9f-9b73c5326506.png"><br>根据 AST 树状图不难看出<br>我们想要的字符串字面量（StringLiteral）<br>可能嵌套在<br>二元表达式（BinaryExpression）或<br>表达式语句（ExpressionStatement）中。</p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img10@main/2026/02/11/1770782276593-d7831b21-5e76-4a27-84a3-23af9d4ade73.png"><br>进入 StringLiteral 节点深处，我们可以发现两个关键属性：</p>
+<p>extra.raw: 混淆后的十六进制形式，例如 ‘\x61’。</p>
+<p>extra.rawValue: Babel 解析后的原始文本，例如 ‘a’</p>
+<p>接下来我们只需要根据这样的节点信息来编写通用的反混淆代码。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">traverse</span>(ast, &#123;</span><br><span class="line">    <span class="comment">//我们通过对比 extra.raw（原始文本）与 extra.rawValue（解析后的实际值），来精准识别出那些被“转义混淆”过的字符串。</span></span><br><span class="line">    <span class="title class_">StringLiteral</span>: <span class="keyword">function</span> (<span class="params">path</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (path.<span class="property">node</span>.<span class="property">extra</span> &amp;&amp; path.<span class="property">node</span>.<span class="property">extra</span>.<span class="property">raw</span> !== path.<span class="property">node</span>.<span class="property">extra</span>.<span class="property">rawValue</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(path.<span class="title function_">toString</span>())</span><br><span class="line">          <span class="comment">//通过日志输出可以查验我们想要操作的节点是否正确，它能让你直观地看到当前处理的代码长什么样</span></span><br><span class="line">            path.<span class="title function_">replaceWith</span>(types.<span class="title function_">stringLiteral</span>(path.<span class="property">node</span>.<span class="property">extra</span>.<span class="property">rawValue</span>));</span><br><span class="line">          <span class="comment">//通过path.replaceWith将原有节点进行替换，types用法见下文。</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-常用类型名称及描述"><a href="#5-常用类型名称及描述" class="headerlink" title="5. 常用类型名称及描述"></a>5. 常用类型名称及描述</h3><p><img src="https://fastly.jsdelivr.net/gh/bucketio/img7@main/2026/02/11/1770782713530-5bca391a-0fe8-4cfb-85f7-ba4b398458d6.png"></p>
+<h2 id="types"><a href="#types" class="headerlink" title="types"></a>types</h2><h3 id="1-常用types的is判断"><a href="#1-常用types的is判断" class="headerlink" title="1.常用types的is判断"></a>1.常用types的is判断</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 语法：types.is[节点类型](待检测的节点)</span></span><br><span class="line"><span class="comment">// 返回：Boolean (true/false)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (types.<span class="title function_">isStringLiteral</span>(path.<span class="property">node</span>)) &#123;</span><br><span class="line">    <span class="comment">// 确定是字符串，可以放心访问 path.node.value</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (types.<span class="title function_">isBinaryExpression</span>(path.<span class="property">node</span>)) &#123;</span><br><span class="line">    <span class="comment">// 确定是二元表达式，可以放心访问 path.node.left 和 path.node.right</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们还可以看一下源码的写法</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">isStringLiteral</span>(<span class="params">node, opts</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!node) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">const</span> nodeType = node.<span class="property">type</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (nodeType === <span class="string">&quot;StringLiteral&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> opts === <span class="string">&quot;undefined&quot;</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> (<span class="number">0</span>, _shallowEqual.<span class="property">default</span>)(node, opts);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它比<code>node.type === &#39;...&#39;</code>更安全，因为它内置了 null 检查。</p>
+<h3 id="2-字面量还原"><a href="#2-字面量还原" class="headerlink" title="2. 字面量还原"></a>2. 字面量还原</h3><p>这些方法用于将解密后的值还原为代码中的常量</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>说明</th>
+<th>示例代码</th>
+<th>还原后的源码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>types.stringLiteral(v)</code></td>
+<td>构造字符串</td>
+<td><code>types.stringLiteral(&quot;hello&quot;)</code></td>
+<td>“hello”</td>
+</tr>
+<tr>
+<td><code>types.numericLiteral(v)</code></td>
+<td>构造数字</td>
+<td><code>types.numericLiteral(123)</code></td>
+<td>123</td>
+</tr>
+<tr>
+<td><code>types.booleanLiteral(v)</code></td>
+<td>构造布尔值</td>
+<td><code>types.booleanLiteral(true)</code></td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>types.identifier(v)</code></td>
+<td>构造变量名&#x2F;标识符</td>
+<td><code>types.identifier(&quot;user&quot;)</code></td>
+<td>user</td>
+</tr>
+</tbody></table>
+<h3 id="3-表达式还原"><a href="#3-表达式还原" class="headerlink" title="3. 表达式还原"></a>3. 表达式还原</h3><p>当你需要把混淆的调用还原为简单的运算或取值时使用。</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>说明</th>
+<th>示例代码</th>
+<th>还原后的源码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>types.binaryExpression(op, l, r)</code></td>
+<td>构造二元运算</td>
+<td><code>types.binaryExpression(&quot;+&quot;, a, b)</code></td>
+<td>a + b</td>
+</tr>
+<tr>
+<td><code>types.callExpression(callee, args)</code></td>
+<td>构造函数调用</td>
+<td><code>types.callExpression(func, [arg1])</code></td>
+<td>func(arg1)</td>
+</tr>
+<tr>
+<td><code>types.memberExpression(obj, prop)</code></td>
+<td>构造对象取值</td>
+<td><code>types.memberExpression(obj, prop)</code></td>
+<td>obj.prop 或 obj[prop]</td>
+</tr>
+<tr>
+<td><code>types.unaryExpression(op, arg)</code></td>
+<td>构造一元运算</td>
+<td><code>types.unaryExpression(&quot;!&quot;, a)</code></td>
+<td>!a</td>
+</tr>
+</tbody></table>
+<h3 id="4-剩余好用的API"><a href="#4-剩余好用的API" class="headerlink" title="4. 剩余好用的API"></a>4. 剩余好用的API</h3><p>(1)<code>types.matchesPattern(node, pattern, allowPartial)</code><br>功能：判断一个节点是否匹配指定的成员表达式路径<br>实战场景：识别并拦截特定的解密工具类方法。<br> <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// 检查当前节点是不是 console.log</span></span><br><span class="line"><span class="keyword">if</span> (types.<span class="title function_">matchesPattern</span>(path.<span class="property">node</span>, <span class="string">&quot;console.log&quot;</span>)) &#123;</span><br><span class="line">    <span class="comment">// 逻辑处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br> (2)<code>types.cloneNode(node)</code><br> 功能：深度克隆一个节点及其子节点。<br> 实战场景：在还原代理函数或展开表达式时，确保新生成的节点是独立的，不会在修改 A 时意外影响到 B。<br> (3)<code>types.toComputedKey(node)</code><br> 举例：混淆代码喜欢把 <code>obj.prop </code>变成 <code>obj[&quot;prop&quot;]</code><br> 功能：将节点转换为有效的对象属性键（处理标识符和字符串字面量之间的转换）。<br> 实战场景：统一属性访问方式，方便后续的静态分析。</p>
+<h2 id="Scope"><a href="#Scope" class="headerlink" title="Scope"></a>Scope</h2><h3 id="1-什么是-Scope？"><a href="#1-什么是-Scope？" class="headerlink" title="1. 什么是 Scope？"></a>1. 什么是 Scope？</h3><p>在 Babel 中，Scope 是一个对象，它代表了代码中的词法作用域（Lexical Scope）。</p>
+<p>每一个函数、每一个块级（Block，如 if 或 for）都会生成一个新的 Scope。它负责记录当前区域内定义了哪些变量，以及这些变量被谁引用了。</p>
+<h3 id="2-有了-Scope-可以完成哪些操作"><a href="#2-有了-Scope-可以完成哪些操作" class="headerlink" title="2.有了 Scope 可以完成哪些操作"></a>2.有了 Scope 可以完成哪些操作</h3><h4 id="（1）变量重命名还原（Rename）"><a href="#（1）变量重命名还原（Rename）" class="headerlink" title="（1）变量重命名还原（Rename）"></a>（1）变量重命名还原（Rename）</h4><ul>
+<li><p>场景：混淆代码喜欢把变量改成 <code>_0x1abc</code></p>
+</li>
+<li><p>操作：<code>path.scope.rename(&quot;_0x1abc&quot;, &quot;decoded_str&quot;)</code></p>
+</li>
+<li><p>作用：它不仅改掉定义的那个名字，还会自动把全篇所有引用这个变量的地方全部改掉，且保证不会污染其他同名变量。</p>
+</li>
+</ul>
+<h4 id="（2）解密函数批量内联"><a href="#（2）解密函数批量内联" class="headerlink" title="（2）解密函数批量内联"></a>（2）解密函数批量内联</h4><ul>
+<li>场景：你发现<code> _0x55aa</code> 是解密函数。</li>
+<li>操作：通过 <code>path.scope.getBinding(&quot;_0x55aa&quot;)</code> 拿到它的 referencePaths。</li>
+<li>作用：你直接遍历这些路径，挨个执行解密并替换，不需要全局扫描字符串。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _0x55aa = <span class="keyword">function</span>(<span class="params">a, b</span>) &#123; ... &#125;; <span class="comment">// 定义解密函数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> alias = _0x55aa;                  <span class="comment">// 引用 1：赋值给别名</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(_0x55aa);                 <span class="comment">// 引用 2：作为参数传递</span></span><br><span class="line"><span class="keyword">var</span> str = <span class="title function_">_0x55aa</span>(<span class="string">&#x27;0x1&#x27;</span>, <span class="string">&#x27;0x2&#x27;</span>);      <span class="comment">// 引用 3：真正的函数调用</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>对代码块举例说明<code>path.scope.getBinding(&quot;_0x55aa&quot;).referencePaths</code> 时，你会拿到 3 个 Path 对象。</p>
+<blockquote>
+<p>引用 1 的 Path 指向的是 <code>_0x55aa</code> 这个 Identifier（标识符）。它的父级是 VariableDeclarator。<br>引用 2 的 Path 指向的是 <code>_0x55aa</code> 这个 Identifier。它的父级是 CallExpression (console.log)。<br>引用 3 的 Path 指向的是 <code>_0x55aa</code> 这个 Identifier。它的父级才是真正的解密调用 CallExpression。</p>
+</blockquote>
+</blockquote>
+<p>我们来对上面这个代码块来做一次还原处理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 获取解密函数的“档案”</span></span><br><span class="line"><span class="keyword">const</span> binding = path.<span class="property">scope</span>.<span class="title function_">getBinding</span>(<span class="string">&quot;_0x55aa&quot;</span>);</span><br><span class="line"><span class="comment">//这个binding.referencePaths可以理解为拿到了所有引用了这个变量的 Path 对象</span></span><br><span class="line"><span class="comment">// 2. 遍历所有引用了该变量的路径 (List)</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> refPath <span class="keyword">of</span> binding.<span class="property">referencePaths</span>) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 3. 拿到当前引用的父级路径</span></span><br><span class="line">    <span class="keyword">const</span> parentPath = refPath.<span class="property">parentPath</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 4. 判断逻辑：父级是不是一个函数调用？且当前引用是不是那个被叫名字的人（callee）？</span></span><br><span class="line">    <span class="keyword">if</span> (parentPath.<span class="title function_">isCallExpression</span>() &amp;&amp; parentPath.<span class="property">node</span>.<span class="property">callee</span> === refPath.<span class="property">node</span>) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 5. 提取参数执行解密（假设参数是第一个）</span></span><br><span class="line">        <span class="keyword">const</span> arg1 = parentPath.<span class="property">node</span>.<span class="property">arguments</span>[<span class="number">0</span>].<span class="property">value</span>;</span><br><span class="line">        <span class="keyword">const</span> arg2 = parentPath.<span class="property">node</span>.<span class="property">arguments</span>[<span class="number">1</span>].<span class="property">value</span>;</span><br><span class="line">        <span class="keyword">const</span> result = <span class="title function_">_0x55aa</span>(arg1,arg2); </span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 6. 替换掉整个调用表达式</span></span><br><span class="line">        parentPath.<span class="title function_">replaceWith</span>(types.<span class="title function_">stringLiteral</span>(result));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>大家可以将举例代码块粘贴于<code>https://astexplorer.net/</code><br>进行配套理解本段反混淆代码<br>这样做的好处是在混淆代码过长，或者有不同函数局部变量导致函数名重复时，实现真实有效的反混淆</p>
+<h4 id="（3）删除死代码"><a href="#（3）删除死代码" class="headerlink" title="（3）删除死代码"></a>（3）删除死代码</h4><ul>
+<li>场景：很多混淆逻辑会生成一堆从未调用的函数。</li>
+<li>操作：检查 <code>binding.referenced === false</code></li>
+<li>效果：直接 path.remove()，代码瞬间清爽。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _0x55aa = <span class="keyword">function</span>(<span class="params">a, b</span>) &#123; <span class="keyword">return</span> a + b; &#125;; <span class="comment">// 真正的解密函数</span></span><br><span class="line"><span class="keyword">var</span> _0x123456 = _0x55aa;                       <span class="comment">// 垃圾别名：定义了但没人用</span></span><br><span class="line"><span class="keyword">var</span> _0x999999 = <span class="string">&quot;I am useless&quot;</span>;                <span class="comment">// 纯垃圾变量</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">_0x55aa</span>(<span class="number">1</span>, <span class="number">2</span>));                    <span class="comment">// 只有这里用到了 _0x55aa</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">traverse</span>(ast, &#123;</span><br><span class="line">    <span class="comment">// 我们可以针对“变量声明”进行扫描</span></span><br><span class="line">    <span class="title class_">VariableDeclarator</span>(path) &#123;</span><br><span class="line">        <span class="comment">// 1. 获取当前变量名的标识符（Identifier）</span></span><br><span class="line">        <span class="keyword">const</span> &#123; id &#125; = path.<span class="property">node</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 2. 如果不是标识符（比如是解构赋值），跳过</span></span><br><span class="line">        <span class="keyword">if</span> (!types.<span class="title function_">isIdentifier</span>(id)) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 索取该变量的“档案”</span></span><br><span class="line">        <span class="keyword">const</span> binding = path.<span class="property">scope</span>.<span class="title function_">getBinding</span>(id.<span class="property">name</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 4. 核心判定：如果没有被引用，且不是全局变量</span></span><br><span class="line">        <span class="keyword">if</span> (binding &amp;&amp; !binding.<span class="property">referenced</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`发现死代码：变量 <span class="subst">$&#123;id.name&#125;</span> 无人引用，正在执行清理...`</span>);</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 5. 物理删除该节点</span></span><br><span class="line">            path.<span class="title function_">remove</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="4-scope-getBinding"><a href="#4-scope-getBinding" class="headerlink" title="(4) scope.getBinding()"></a>(4) scope.getBinding()</h4><p>单独拿出来说是因为其本身就很复杂</p>
+<p>当你执行 getBinding 时，Babel 会瞬间把这个变量在整个作用域链（Scope Chain）上的所有信息抽调出来。</p>
+<p>它有一个向上溯源的属性，会一直向父级，爷爷级向上找，直到全局作用域。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// binding = path.scope.getBinding(&quot;变量名&quot;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. binding.path </span></span><br><span class="line"><span class="comment">// 这是一个指向“声明节点（Declaration）”的 NodePath 对象。</span></span><br><span class="line"><span class="comment">// 用途：你可以直接通过 binding.path.node 获取变量的初始化值。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. binding.referencePaths </span></span><br><span class="line"><span class="comment">// 这是一个由 NodePath 对象组成的 Array（数组）。</span></span><br><span class="line"><span class="comment">// 用途：记录了全篇所有引用该变量的地方。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. binding.constant</span></span><br><span class="line"><span class="comment">// 这是一个 Boolean（布尔值）。</span></span><br><span class="line"><span class="comment">// 用途：如果变量定义后从未出现在赋值号左侧（没被改过），则为 true。</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-常用api汇总"><a href="#3-常用api汇总" class="headerlink" title="3.常用api汇总"></a>3.常用api汇总</h3><table>
+<thead>
+<tr>
+<th>API 方法</th>
+<th>作用说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>path.scope.getBinding(name)</td>
+<td>获取某个变量的详细档案（Binding）。</td>
+</tr>
+<tr>
+<td>path.scope.hasBinding(name)</td>
+<td>判断当前作用域（含父级）是否定义了该变量。</td>
+</tr>
+<tr>
+<td>path.scope.hasOwnBinding(name)</td>
+<td>只在当前作用域寻找定义。</td>
+</tr>
+<tr>
+<td>path.scope.generateUid(name)</td>
+<td>生成一个当前作用域内唯一的变量名（防冲突）。</td>
+</tr>
+<tr>
+<td>path.scope.dump()</td>
+<td>调试利器！ 打印当前作用域的所有变量信息到控制台。</td>
+</tr>
+</tbody></table>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在代码的废墟中，所有的混乱都遵循着某种秩序。而 AST，就是我们重建秩序的蓝图。</p>
+<p>由于 AST 混淆技术博大精深，本人水平有限，文中若有疏漏或理解偏差之处，恳请各位前辈大佬不吝赐教，我们评论区见。</p>
+<p>希望我的内容能够帮助到您，如果有侵权或冒犯的地方请私信我。</p>
+<p>最后，愿我们在高处相见，亦或在深处重逢。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LUuv2QEvOP2tkzQGx8iRGg">什么是ast，怎么用ast，ast的一些思考</a></li>
+</ul>
+<hr>
+<p>   <img src="https://fastly.jsdelivr.net/gh/bucketio/img4@main/2026/02/11/1770791852679-7134300f-96f4-4f02-a06a-86e130e060c5.jpg"></p>
+
+      </div>
+    </div>
+    
+      <script src='https://unpkg.com/mermaid@latest/dist/mermaid.min.js'></script>
+      <script>
+        if (window.mermaid) {
+          mermaid.initialize({"startOnload":true});
+        }
+      </script>
+    
+  </article>
+  <div class="post__foot">
+    
+      <div class="like-author">
+  <input type="checkbox" id="likeCode" />
+  <div class="author-face">
+    <img height="100px"
+         width="100px"
+         id="front-face"
+         alt="author face"
+         src="/assets/author-face.jpg" />
+    <img height="100px"
+         width="100px"
+         id="back-face"
+         alt="like code"
+         src="/assets/pay-code.jpg" />
+  </div>
+  <div class="like-text">“给作者倒杯卡布奇诺”</div>
+  <label for="likeCode" class="like-btn">
+    <svg viewBox="0 0 1024 1024"
+         width="20px"
+         style="margin-right: 10px"
+         height="20px">
+      <path d="M466.88 908.96L113.824 563.296a270.08 270.08 0 0 1 0-387.392c108.8-106.56 284.896-106.56 393.696 0 1.504 1.472 2.976 2.944 4.448 4.48 1.472-1.536 2.944-3.008 4.448-4.48 108.8-106.56 284.896-106.56 393.696 0a269.952 269.952 0 0 1 34.016 347.072l-387.392 385.6a64 64 0 0 1-89.92 0.384z" p-id="13650" fill="#ee4242" />
+    </svg>
+    喜欢作者
+  </label>
+</div>
+
+    
+    <div class="post-nav">
+  
+    <div class="post-nav-item-left"></div>
+  
+  <div class="vhr"></div>
+  
+    <a class="post-nav-item-right" href="/2026/01/13/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">
+      <div class="text-align">
+        <span class="text-small">下一篇</span>
+        <svg t="1670570876164"
+             class="icon"
+             viewBox="0 0 1024 1024"
+             transform="scale(-1,-1)"
+             width="16"
+             height="16">
+          <path d="M384 512L731.733333 202.666667c17.066667-14.933333 19.2-42.666667 4.266667-59.733334-14.933333-17.066667-42.666667-19.2-59.733333-4.266666l-384 341.333333c-10.666667 8.533333-14.933333 19.2-14.933334 32s4.266667 23.466667 14.933334 32l384 341.333333c8.533333 6.4 19.2 10.666667 27.733333 10.666667 12.8 0 23.466667-4.266667 32-14.933333 14.933333-17.066667 14.933333-44.8-4.266667-59.733334L384 512z" p-id="14596" />
+        </svg>
+      </div>
+      一切的开始
+    </a>
+  
+</div>
+
+    
+      <div class="related-post">
+  <div class="related__head">
+  
+
+</div>
+  <div class="realated__body">
+    
+      <div class="null"><div class="null-item"><div class="null-title"><a href="\2026\01\13\第一篇博客\" title="一切的开始" rel="bookmark">一切的开始</a></div></div></div>
+    
+  </div>
+</div>
+
+    
+    
+  </div>
+
+    </div>
+    <div class="foot">
+  <div class="foot-inner">
+    <div class="foot__head">
+      
+        <div class="foot-line">
+          <div class="matts">师</div><div class="matts">出</div><div class="matts">猿</div><div class="matts">人</div><div class="matts">学</div>
+        </div>
+      
+        <div class="foot-line">
+          <div class="matts">欢</div><div class="matts">迎</div><div class="matts">来</div><div class="matts">加</div><div class="matts">入</div>
+        </div>
+      
+    </div>
+    <div class="foot__body">
+      
+        <div class="foot-item">
+          <div class="foot-item__head">朋友</div>
+          <div class="foot-item__body">
+            
+            
+
+
+  
+  
+    <div class="foot-link-group">
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/icon/icon-link.svg" />
+            <a class="foot-link" target="_blank" rel="noopener" href="https://github.com/poker-S/poker-S.github.io">Theme Tranquility</a>
+          </div>
+        
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/icon/icon-link.svg" />
+            <a class="foot-link" target="_blank" rel="noopener" href="https://poker-S.github.io">PokerS的主页</a>
+          </div>
+        
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/icon/icon-link+.svg" />
+            <a class="foot-link" href="mailto:zongyatong@gmail.com?subject=申请http://example.com的友链">申请友链</a>
+          </div>
+        
+      
+        
+        
+      
+    </div>
+  
+
+
+          </div>
+        </div>
+      
+      
+        <div class="foot-item">
+          <div class="foot-item__head">账号</div>
+          <div class="foot-item__body">
+            
+
+
+  
+  
+    <div class="foot-link-group">
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/logo-github.svg" />
+            <a class="foot-link" target="_blank" rel="noopener" href="https://github.com/poker-S">Poker-S</a>
+          </div>
+        
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/logo-wx.svg" />
+            <a class="foot-link" target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dd71iLOnQWq_55hnX0F7Ow">虫队长</a>
+          </div>
+        
+      
+        
+        
+      
+        
+        
+      
+    </div>
+  
+
+
+          </div>
+        </div>
+      
+      <div class="foot-item">
+        <div class="foot-item__head">联系</div>
+        <div class="foot-item__body">
+          
+
+
+  
+  
+    <div class="foot-link-group">
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/icon/icon-email.svg" />
+            <a class="foot-link" href="">180004584@qq.com</a>
+          </div>
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+    </div>
+  
+
+
+        </div>
+      </div>
+    </div>
+    <div class="copyright">
+      <a href="http://example.com">PokerS</a> &nbsp;|&nbsp;由&nbsp;<a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>&nbsp;及&nbsp;
+      <svg width="20" height="20" viewBox="0 0 725 725">
+        <path fill-rule="evenodd" fill="rgb(221, 221, 221)" d="M145.870,236.632 L396.955,103.578 L431.292,419.44 L156.600,522.53 L145.870,236.632 Z" />
+        <path fill-rule="evenodd" fill="rgb(159, 159, 159)" d="M396.955,103.578 L564.345,234.486 L611.558,513.469 L431.292,419.44 L396.955,103.578 Z" />
+        <path fill-rule="evenodd" fill="rgb(0, 0, 0)" d="M431.292,419.44 L611.558,513.469 L358.327,595.18 L156.600,522.53 L431.292,419.44 Z" />
+      </svg>
+      <a target="_blank" rel="noopener" href="https://github.com/hooozen/hexo-theme-tranquility">致远</a>&nbsp;驱动
+    </div>
+  </div>
+</div>
+
+    
+    
+      <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
+      <script type="text/javascript">
+        docsearch({
+          appId: 'appId',
+          apiKey: 'apiKey',
+          indexName: 'indexName',
+          insights: 'true',
+          container: 'div#algolia-search',
+          debug: 'false'
+        });
+      </script>
+    
+    <script src="/js/copy-code.js"></script>
+    
+  
+
+  </body>
+</html>
