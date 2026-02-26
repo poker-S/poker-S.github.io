@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf8"/>
+    
+    <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+    <title>
+      
+        爱某网逆向分析全流程 | PokerS
+      
+    </title>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    
+      <link rel="apple-touch-icon"
+            sizes="180x180"
+            href="/images/apple-touch-icon.png"/>
+    
+    
+      <link rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/images/favicon-32x32.png"/>
+    
+    
+      <link rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/images/favicon-16x16.png"/>
+    
+    
+      <link rel="mask-icon"
+            href="/images/logo.svg"
+            color=""/>
+    
+    
+    
+      
+  <style>
+    @font-face {
+        font-family:sourceHanSerif;
+        src: url(/font/normal.ttf);
+        font-weight: normal;
+    }
+  </style>
+
+  <style>
+    @font-face {
+        font-family:sourceHanSerif;
+        src: url(/font/bold.ttf);
+        font-weight: bold;
+    }
+  </style>
+
+
+    
+    <link rel="stylesheet"
+          type="text/css"
+          href='/css/layout.css'/>
+    
+    
+  <link rel="stylesheet" type="text/css" href="/css/post.css"/>
+  
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"/>
+    
+    
+    <div class=head>
+      <div class="nav">
+        <a href='/' class="nav-logo">
+          <img alt="logo" height="60px" width="60px" src="/images/logo.svg"/>
+        </a>
+        <input id="navBtn" type="checkbox"/>
+        <div class="nav-right">
+          
+            <div class="search-outer" id="algolia-search"></div>
+          
+          <div class="nav-menu">
+            
+              
+                <a class="nav-menu-item" href="/feat">文章</a>
+              
+                <a class="nav-menu-item" href="/base">思考</a>
+              
+            
+            
+              <a class="nav-menu-item" href='/cv/'>简历</a>
+            
+          </div>
+        </div>
+        <label class="nav-btn" for="navBtn"></label>
+      </div>
+    </div>
+    <div class="body">
+      
+  <article class="post-content">
+    <div class="post-inner">
+      <div class="post-content__head">
+        <div class="post-title">爱某网逆向分析全流程</div>
+        <div class="post-info">
+          
+  
+
+
+          <span class="post-date">2026-02-26</span>
+        </div>
+      </div>
+      
+      <div class="post-content__body">
+        
+          <div class="post-gallery">
+            
+          </div>
+        
+        <h1 id="爱某网逆向分析全流程"><a href="#爱某网逆向分析全流程" class="headerlink" title="爱某网逆向分析全流程"></a>爱某网逆向分析全流程</h1><hr>
+<h2 id="提示！本文章仅供学习交流，严禁用于任何商业和非法用途，未经许可禁止转载，禁止任何修改后二次传播，擅自使用本文讲解的技术而导致的任何意外，作者均不负责，如有侵权，可联系本文作者删除！"><a href="#提示！本文章仅供学习交流，严禁用于任何商业和非法用途，未经许可禁止转载，禁止任何修改后二次传播，擅自使用本文讲解的技术而导致的任何意外，作者均不负责，如有侵权，可联系本文作者删除！" class="headerlink" title="提示！本文章仅供学习交流，严禁用于任何商业和非法用途，未经许可禁止转载，禁止任何修改后二次传播，擅自使用本文讲解的技术而导致的任何意外，作者均不负责，如有侵权，可联系本文作者删除！"></a><strong>提示！本文章仅供学习交流，严禁用于任何商业和非法用途，未经许可禁止转载，禁止任何修改后二次传播，擅自使用本文讲解的技术而导致的任何意外，作者均不负责，如有侵权，可联系本文作者删除！</strong></h2><p>网站链接 :<br><code>aHR0cHM6Ly93d3cuYWlnZWkuY29tL3NvdW5kL2NsYXNzLwo=</code></p>
+<h2 id="一、抓包分析"><a href="#一、抓包分析" class="headerlink" title="一、抓包分析"></a>一、抓包分析</h2><p><img src="https://fastly.jsdelivr.net/gh/bucketio/img4@main/2026/02/25/1772017856851-f5b54c0f-fa73-4942-82b1-e254a0c907d7.png"></p>
+<p>可以发现有着四个可疑的地方，分别是一个接口，一个音频，和两个 mp3，这时候我们可以通过 AI 的方式来进行排查。</p>
+<p>通过询问 AI，接口可能是个防御措施咱们先不用管，我们想要拿到音频文件，但是很显然音频有加密，那就要分析加密是哪来的，所以我们继续看这两个 mp3 接口，通过分析其中的参数，我们在其中的一个 mp3 的参数中找到了一串密文，抱着尝试的心我打开了 base64 解码在线工具，很不巧的是，让我猜中了，就是一串 base64。</p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img6@main/2026/02/25/1772018510284-2d291024-9d5b-46fc-91ae-0768d2899be7.png"></p>
+<p>那么现在我们的目的很明确了，就是逆这个 mp3 接口，废话不多说，直接开干。</p>
+<hr>
+<h2 id="二、逆向-mp3-接口"><a href="#二、逆向-mp3-接口" class="headerlink" title="二、逆向 mp3 接口"></a>二、逆向 mp3 接口</h2><p><img src="https://fastly.jsdelivr.net/gh/bucketio/img18@main/2026/02/25/1772018622377-05885648-7f52-4bd2-8728-55c523fd8bb7.png"></p>
+<p>由于加密参数是个没有特征的字母，所以咱们直接翻堆栈，从 fget 中点过去，找到了 ajax。</p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img15@main/2026/02/25/1772018800141-74bb1cf7-0202-4031-87c1-dec7261320f2.png"></p>
+<p>打断点，找参数，找到了之后开始扣代码，由于这个网站的加密不是那么难，所以就不搞补环境了，醇酸我也不会。嗯….开始吧</p>
+<p>这里有个细节需要注意一下，在 ajax 打断点的时候，第一次尝试，是走了两遍 ajax，那么我们就需要去留意一下，通过参数内容，我们翻一下抓包，分析得到，第一次的 ajax 是我们想要得到的 mp3 接口参数，而第二次的 ajax 是另一个 mp3 接口。那个 mp3 接口我不知道是干什么的，由于是边做边写的文章，所以如果后续用到了的话会再进行分析。</p>
+<hr>
+<h2 id="三、分析加密参数"><a href="#三、分析加密参数" class="headerlink" title="三、分析加密参数"></a>三、分析加密参数</h2><p><img src="https://fastly.jsdelivr.net/gh/bucketio/img8@main/2026/02/25/1772019750478-6fbd5309-df10-4e1f-b545-c2735bfe9003.png"></p>
+<p>可以给大家说一下这个思考过程，供大家参考。首先我们要的参数就是这个 E，那么 E 分为两部分，一个是这个加密函数，另一个是这个加密参数。我们可以先从参数入手，那么我是先打断点翻堆栈，发现这个地方不是那么好入手。所以我会再去仔细看这个参数。从这个箭头可以看出，我会先去想这个 ud 是怎么来的，然后我们就往上看。发现第一次出现是在这个 dfu 函数处理之后。那么很显然，这个是加密参数的加密函数。然后这时候去看这个 dfu 加密参数都有什么，别看它有七个参数，实际上后面三个都是 undefined。前四个分别是：</p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img5@main/2026/02/25/1772020019720-55104209-f025-46ee-9625-276c857c1166.png"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img9@main/2026/02/25/1772020073748-2af4ff47-49a1-41bc-b408-57c7aca665c1.png"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img14@main/2026/02/25/1772020089746-9ca80713-97f3-49be-b9d1-5991ec8f12eb.png"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img18@main/2026/02/25/1772020113566-e331c510-36fc-41e1-b852-04819b1e17b9.png"></p>
+<p>按照这个照片顺序，简单说一下我的猜测：</p>
+<ul>
+<li>这个 C，一定是固定的，这个是接口名称</li>
+<li>第二个参数暂时可以认为是这个音频的 id，之后会详细的去确认</li>
+<li>第三个参数，很明显是个时间戳，可以用 <code>console.log(Date.now())</code> 去验证一下这个时间戳的长度是不是正常的，因为有些时间戳会 <code>/1000</code> 也说不定</li>
+<li>第四个参数很明显是个 token，猜测是根据账号来分配的 token</li>
+</ul>
+<hr>
+<h2 id="四、参数验证与确认"><a href="#四、参数验证与确认" class="headerlink" title="四、参数验证与确认"></a>四、参数验证与确认</h2><p>那么猜测结束，我去验证了一下，怎么验证的呢，时间戳打印验证，发现不是很相近，而且不同的音频返回的 token 也不一样。那么咱们可以尝试抓包搜索，如果搜不到的话我可能会去尝试使用</p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img6@main/2026/02/25/1772020811035-be0ad1e6-c37c-4f0d-99f2-ed4ce0d2e869.png"></p>
+<p>这个功能，最终，效果是一致的，为什么我会说可以会用这个功能呢，因为前面我也说过，有个参数很像歌曲 id，之前做某易云的时候我就用过这招，效果是显著的。最后才会想到去翻堆栈找参数。</p>
+<p>实际上，抓包做接口成为了习惯，但是我们往往容易忘记，本身页面也是有信息存在的，也是可用的。</p>
+<p>至于这四个参数的抓取，就不在这篇文章里了。</p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img14@main/2026/02/25/1772021356392-026fe384-e18e-4790-a818-08eb30059e20.png"></p>
+<p>好，我们在 IDE 里固定这四个值。</p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img2@main/2026/02/25/1772021922867-022bc7a9-8b49-460d-9247-1be2d51a3f1e.png"></p>
+<p>剩下的部分，就是缺什么补什么了。</p>
+<hr>
+<h2 id="五、处理-jQuery-依赖"><a href="#五、处理-jQuery-依赖" class="headerlink" title="五、处理 jQuery 依赖"></a>五、处理 jQuery 依赖</h2><p>然后就来到了，一个比较难处理的地方，本处在此鸣谢时一姐的星球知识！！！！</p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img12@main/2026/02/25/1772029970812-7ec30ec7-8be2-4091-b309-40f0f73e93d9.png"></p>
+<p>就会看到这个 juquery，那怎么处理呢，在此再次鸣谢时一姐。</p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img10@main/2026/02/25/1772030164656-512cb3ed-0e59-4655-bb42-7bb4194bd0b1.png"></p>
+<p>我们来到这个 juquery，把外面这层自执行函数给扒下来单独做一个文件来进行调试。</p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img4@main/2026/02/25/1772030314833-bdc1c648-06a2-49d1-be5e-f09372cab5cd.png"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img7@main/2026/02/26/1772080540747-74c15ed4-483f-4d80-a44c-32bf28ecec4d.png"></p>
+<p>通过对比可以发现，这和 juquery 中 x 是一样的，也就是说，我们把 juquery 中的 x 抠出来就算完成了，此处为缺什么补什么，最后将 x 赋值给 <code>$</code>。然后整体带回解密函数。再进行缺什么补什么的扣代码细节。</p>
+<p>v 这个参数，就算是补完了，但是此时是请求不过的，因为接口还有个请求头的参数加密。</p>
+<hr>
+<h2 id="六、请求头加密分析"><a href="#六、请求头加密分析" class="headerlink" title="六、请求头加密分析"></a>六、请求头加密分析</h2><p><img src="https://fastly.jsdelivr.net/gh/bucketio/img8@main/2026/02/26/1772093454570-23bcc56b-a951-47a0-bdb0-b0582c6b060d.png"></p>
+<p>这个呢，可以通过搜索的方式来寻找。</p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img10@main/2026/02/26/1772093512524-136816ea-1db7-4c07-952b-20015aa330f9.png"></p>
+<p>然后打断点。</p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img15@main/2026/02/26/1772093553254-6a98b950-19fc-47a0-be34-515a4d037d24.png"></p>
+<p>发现这个 <code>pIii111lllE</code>，然后全局一搜索，这个 id 是全局唯一的，并且，在后续请求的时候，发现只有第一页有这个 id，因为这个翻页是通过异步渲染接口来进行的，但是请求第一页的接口是没有这个 id 的，只能通过先请求再 xpath 再当成参数传入 js。</p>
+<p>由于之前已经扣过代码了，所以一起传入 js，缺什么补什么，然后获取 v 参数和 headers 参数。</p>
+<hr>
+<h2 id="七、获取音频地址"><a href="#七、获取音频地址" class="headerlink" title="七、获取音频地址"></a>七、获取音频地址</h2><p>最后就能顺利的拿到 message。</p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img13@main/2026/02/26/1772093880921-9d8391f7-e5b2-43ce-8a75-6c9964704489.png"></p>
+<p>前面已经说过了，这个 message 是 base64 编码，所以做解码处理就能得到音频接口的请求地址。</p>
+<p>但是光复制请求地址去浏览器打开是没办法拿到音频的，因为这个网站还有防盗链限制。此时带上完整的请求头即可。</p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img8@main/2026/02/26/1772094461908-db066e7b-7c46-4163-8064-0d8b460499b2.png"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/bucketio/img0@main/2026/02/26/1772094487287-79eba751-59a4-4c56-a45e-82fb248f2c1b.png"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>由于爬虫逆向技术博大精深，本人水平有限，文中若有疏漏或理解偏差之处，恳请各位前辈大佬不吝赐教，我们评论区见。</p>
+<p>最后，愿我们在高处相见，亦或在深处重逢。</p>
+
+      </div>
+    </div>
+    
+      <script src='https://unpkg.com/mermaid@latest/dist/mermaid.min.js'></script>
+      <script>
+        if (window.mermaid) {
+          mermaid.initialize({"startOnload":true});
+        }
+      </script>
+    
+  </article>
+  <div class="post__foot">
+    
+      <div class="like-author">
+  <input type="checkbox" id="likeCode" />
+  <div class="author-face">
+    <img height="100px"
+         width="100px"
+         id="front-face"
+         alt="author face"
+         src="/assets/author-face.jpg" />
+    <img height="100px"
+         width="100px"
+         id="back-face"
+         alt="like code"
+         src="/assets/pay-code.jpg" />
+  </div>
+  <div class="like-text">“给作者倒杯卡布奇诺”</div>
+  <label for="likeCode" class="like-btn">
+    <svg viewBox="0 0 1024 1024"
+         width="20px"
+         style="margin-right: 10px"
+         height="20px">
+      <path d="M466.88 908.96L113.824 563.296a270.08 270.08 0 0 1 0-387.392c108.8-106.56 284.896-106.56 393.696 0 1.504 1.472 2.976 2.944 4.448 4.48 1.472-1.536 2.944-3.008 4.448-4.48 108.8-106.56 284.896-106.56 393.696 0a269.952 269.952 0 0 1 34.016 347.072l-387.392 385.6a64 64 0 0 1-89.92 0.384z" p-id="13650" fill="#ee4242" />
+    </svg>
+    喜欢作者
+  </label>
+</div>
+
+    
+    <div class="post-nav">
+  
+    <div class="post-nav-item-left"></div>
+  
+  <div class="vhr"></div>
+  
+    <a class="post-nav-item-right" href="/2026/02/11/ast%E5%8F%8D%E6%B7%B7%E6%B7%86%E4%B9%8B%E5%B8%B8%E7%94%A8api%E7%9A%84%E4%BD%BF%E7%94%A8/">
+      <div class="text-align">
+        <span class="text-small">下一篇</span>
+        <svg t="1670570876164"
+             class="icon"
+             viewBox="0 0 1024 1024"
+             transform="scale(-1,-1)"
+             width="16"
+             height="16">
+          <path d="M384 512L731.733333 202.666667c17.066667-14.933333 19.2-42.666667 4.266667-59.733334-14.933333-17.066667-42.666667-19.2-59.733333-4.266666l-384 341.333333c-10.666667 8.533333-14.933333 19.2-14.933334 32s4.266667 23.466667 14.933334 32l384 341.333333c8.533333 6.4 19.2 10.666667 27.733333 10.666667 12.8 0 23.466667-4.266667 32-14.933333 14.933333-17.066667 14.933333-44.8-4.266667-59.733334L384 512z" p-id="14596" />
+        </svg>
+      </div>
+      ast反混淆之常用api的使用
+    </a>
+  
+</div>
+
+    
+      <div class="related-post">
+  <div class="related__head">
+  
+
+</div>
+  <div class="realated__body">
+    
+      <div class="null"><div class="null-item"><div class="null-title"><a href="\2026\01\13\第一篇博客\" title="一切的开始" rel="bookmark">一切的开始</a></div></div><div class="null-item"><div class="null-title"><a href="\2026\02\11\ast反混淆之常用api的使用\" title="ast反混淆之常用api的使用" rel="bookmark">ast反混淆之常用api的使用</a></div></div></div>
+    
+  </div>
+</div>
+
+    
+    
+  </div>
+
+    </div>
+    <div class="foot">
+  <div class="foot-inner">
+    <div class="foot__head">
+      
+        <div class="foot-line">
+          <div class="matts">师</div><div class="matts">出</div><div class="matts">猿</div><div class="matts">人</div><div class="matts">学</div>
+        </div>
+      
+        <div class="foot-line">
+          <div class="matts">欢</div><div class="matts">迎</div><div class="matts">来</div><div class="matts">加</div><div class="matts">入</div>
+        </div>
+      
+    </div>
+    <div class="foot__body">
+      
+        <div class="foot-item">
+          <div class="foot-item__head">朋友</div>
+          <div class="foot-item__body">
+            
+            
+
+
+  
+  
+    <div class="foot-link-group">
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/icon/icon-link.svg" />
+            <a class="foot-link" target="_blank" rel="noopener" href="https://github.com/poker-S/poker-S.github.io">Theme Tranquility</a>
+          </div>
+        
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/icon/icon-link.svg" />
+            <a class="foot-link" target="_blank" rel="noopener" href="https://poker-S.github.io">PokerS的主页</a>
+          </div>
+        
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/icon/icon-link+.svg" />
+            <a class="foot-link" href="mailto:zongyatong@gmail.com?subject=申请http://example.com的友链">申请友链</a>
+          </div>
+        
+      
+        
+        
+      
+    </div>
+  
+
+
+          </div>
+        </div>
+      
+      
+        <div class="foot-item">
+          <div class="foot-item__head">账号</div>
+          <div class="foot-item__body">
+            
+
+
+  
+  
+    <div class="foot-link-group">
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/logo-github.svg" />
+            <a class="foot-link" target="_blank" rel="noopener" href="https://github.com/poker-S">Poker-S</a>
+          </div>
+        
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/logo-wx.svg" />
+            <a class="foot-link" target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dd71iLOnQWq_55hnX0F7Ow">虫队长</a>
+          </div>
+        
+      
+        
+        
+      
+        
+        
+      
+    </div>
+  
+
+
+          </div>
+        </div>
+      
+      <div class="foot-item">
+        <div class="foot-item__head">联系</div>
+        <div class="foot-item__body">
+          
+
+
+  
+  
+    <div class="foot-link-group">
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/icon/icon-email.svg" />
+            <a class="foot-link" href="">180004584@qq.com</a>
+          </div>
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+    </div>
+  
+
+
+        </div>
+      </div>
+    </div>
+    <div class="copyright">
+      <a href="http://example.com">PokerS</a> &nbsp;|&nbsp;由&nbsp;<a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>&nbsp;及&nbsp;
+      <svg width="20" height="20" viewBox="0 0 725 725">
+        <path fill-rule="evenodd" fill="rgb(221, 221, 221)" d="M145.870,236.632 L396.955,103.578 L431.292,419.44 L156.600,522.53 L145.870,236.632 Z" />
+        <path fill-rule="evenodd" fill="rgb(159, 159, 159)" d="M396.955,103.578 L564.345,234.486 L611.558,513.469 L431.292,419.44 L396.955,103.578 Z" />
+        <path fill-rule="evenodd" fill="rgb(0, 0, 0)" d="M431.292,419.44 L611.558,513.469 L358.327,595.18 L156.600,522.53 L431.292,419.44 Z" />
+      </svg>
+      <a target="_blank" rel="noopener" href="https://github.com/hooozen/hexo-theme-tranquility">致远</a>&nbsp;驱动
+    </div>
+  </div>
+</div>
+
+    
+    
+      <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
+      <script type="text/javascript">
+        docsearch({
+          appId: 'appId',
+          apiKey: 'apiKey',
+          indexName: 'indexName',
+          insights: 'true',
+          container: 'div#algolia-search',
+          debug: 'false'
+        });
+      </script>
+    
+    <script src="/js/copy-code.js"></script>
+    
+  
+
+  </body>
+</html>
