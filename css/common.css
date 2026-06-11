@@ -146,13 +146,22 @@ figure.highlight .copy-button {
   display: flex;
   position: absolute;
   align-items: center;
+  justify-content: center;
   top: 0;
   right: 16px;
   height: 32px;
-  font-size: 12px;
-  font-weight: 600;
+  width: 32px;
   color: #888;
   cursor: pointer;
+  border-radius: 4px;
+  transition: color 200ms ease, background-color 200ms ease;
+}
+figure.highlight .copy-button:hover {
+  color: #555;
+  background-color: rgba(0,0,0,0.06);
+}
+figure.highlight .copy-button.copied {
+  color: #35cd4b;
 }
 /* layout */
 .wall {

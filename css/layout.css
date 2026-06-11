@@ -146,13 +146,22 @@ figure.highlight .copy-button {
   display: flex;
   position: absolute;
   align-items: center;
+  justify-content: center;
   top: 0;
   right: 16px;
   height: 32px;
-  font-size: 12px;
-  font-weight: 600;
+  width: 32px;
   color: #888;
   cursor: pointer;
+  border-radius: 4px;
+  transition: color 200ms ease, background-color 200ms ease;
+}
+figure.highlight .copy-button:hover {
+  color: #555;
+  background-color: rgba(0,0,0,0.06);
+}
+figure.highlight .copy-button.copied {
+  color: #35cd4b;
 }
 .wall {
   user-select: none;
@@ -562,6 +571,33 @@ mjx-container {
   display: flex;
   align-items: center;
 }
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 50%;
+  color: #333;
+  transition: background-color 200ms ease, color 200ms ease;
+  margin-left: 12px;
+}
+.theme-toggle:hover {
+  background-color: rgba(0,0,0,0.06);
+}
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+html[data-theme="dark"] .theme-toggle {
+  color: #ccc;
+}
+html[data-theme="dark"] .theme-toggle:hover {
+  background-color: rgba(255,255,255,0.1);
+}
 .foot {
   background-color: #000;
 }
@@ -621,6 +657,134 @@ mjx-container {
 }
 .copyright a:hover {
   color: #666;
+}
+html[data-theme="dark"] {
+  background-color: #1a1a2e;
+  color: #e0e0e0;
+}
+html[data-theme="dark"] body {
+  background-color: #1a1a2e;
+  color: #e0e0e0;
+}
+html[data-theme="dark"] a {
+  color: #b0b0b0;
+}
+html[data-theme="dark"] a:hover {
+  color: #fff;
+}
+html[data-theme="dark"] blockquote {
+  border-left-color: #444;
+  color: #aaa;
+}
+html[data-theme="dark"] .head--sticky {
+  background: rgba(26,26,46,0.85);
+}
+html[data-theme="dark"] .nav-menu-item {
+  color: #ccc;
+}
+html[data-theme="dark"] .nav-menu-item:hover {
+  color: #fff;
+}
+html[data-theme="dark"] code,
+html[data-theme="dark"] pre,
+html[data-theme="dark"] figure.highlight {
+  background-color: #0d1117;
+}
+html[data-theme="dark"] figure.highlight {
+  box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+}
+html[data-theme="dark"] figure.highlight .gutter pre {
+  background-color: #161b22;
+  color: #666;
+}
+html[data-theme="dark"] figure.highlight .copy-button {
+  color: #666;
+}
+html[data-theme="dark"] figure.highlight .copy-button:hover {
+  color: #ccc;
+  background-color: rgba(255,255,255,0.08);
+}
+html[data-theme="dark"] code {
+  background-color: #2d333b;
+  color: #e0e0e0;
+}
+html[data-theme="dark"] caption,
+html[data-theme="dark"] td,
+html[data-theme="dark"] th {
+  border-color: #333;
+}
+html[data-theme="dark"] tbody tr:nth-of-type(odd) {
+  background: #1f1f3a;
+}
+html[data-theme="dark"] th {
+  border-bottom-color: #555;
+}
+html[data-theme="dark"] .page-number {
+  color: #ccc;
+  border-color: #ccc;
+}
+html[data-theme="dark"] .page-number.current {
+  background-color: #ccc;
+  color: #1a1a2e;
+}
+html[data-theme="dark"] .page-number:hover {
+  background-color: #999;
+  color: #1a1a2e;
+}
+html[data-theme="dark"] .post-tag {
+  color: #6ba3e8;
+}
+html[data-theme="dark"] .post-tag:hover {
+  color: #8fc0ff;
+}
+html[data-theme="dark"] .post-info {
+  color: #888;
+}
+html[data-theme="dark"] .hover-line::after {
+  background-color: #fff;
+}
+html[data-theme="dark"] .toc-outer {
+  color: #aaa;
+}
+html[data-theme="dark"] .toc-outer .toc-title {
+  border-top-color: #333;
+  color: #ccc;
+}
+html[data-theme="dark"] .wall {
+  color: #e0e0e0;
+}
+html[data-theme="dark"] .foot {
+  color: #aaa;
+}
+html[data-theme="dark"] .search-main {
+  background: rgba(26,26,46,0.95);
+}
+html[data-theme="dark"] .like-text {
+  color: #aaa;
+}
+html[data-theme="dark"] figure figcaption {
+  color: #888;
+}
+html[data-theme="dark"] .highlight figcaption {
+  background: #161b22;
+}
+@media screen and (max-width: 1023px) {
+  html[data-theme="dark"] .nav {
+    background: rgba(26,26,46,0.95);
+  }
+  html[data-theme="dark"] .nav-menu {
+    background: rgba(26,26,46,0.95);
+  }
+  html[data-theme="dark"] .nav-btn::before,
+  html[data-theme="dark"] .nav-btn::after {
+    background: #ccc;
+  }
+}
+html[data-theme="dark"] .post-nav .vhr {
+  background-color: #333;
+}
+html[data-theme="dark"] .matts {
+  filter: invert(1);
 }
 .body {
   z-index: 0;

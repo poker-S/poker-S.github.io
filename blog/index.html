@@ -2,6 +2,13 @@
 <html lang="zh-cn">
   <head>
     <meta charset="utf8"/>
+    <script>
+      (function(){
+        var t = localStorage.getItem('theme');
+        if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
     
     <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
     <title>
@@ -89,6 +96,7 @@
               <a class="nav-menu-item" href='/cv/'>简历</a>
             
           </div>
+          <button class="theme-toggle" id="themeToggle" aria-label="切换主题"></button>
         </div>
         <label class="nav-btn" for="navBtn"></label>
       </div>
@@ -111,6 +119,28 @@
   <div class="post-list">
     
       
+  
+  <div class="post-card">
+    <div class="post__head">
+      <a href="/2026/06/11/%E4%B8%B0%E5%B7%A2%E6%BB%91%E5%9D%97/" class="post-title hover-line">丰巢滑块纯算</a>
+      
+    </div>
+    <div class="post__body">
+      
+        <a href="/2026/06/11/%E4%B8%B0%E5%B7%A2%E6%BB%91%E5%9D%97/"
+           class="post-cover"
+           style="background-image: url(/assets/images/57-1.jpg)"></a>
+      
+      <div class="post-excerpt"></div>
+    </div>
+    <div class="post__foot">
+      <div class="post-tags">
+  
+
+</div>
+    </div>
+  </div>
+
   
   <div class="post-card">
     <div class="post__head">
@@ -428,6 +458,7 @@
       </script>
     
     <script src="/js/copy-code.js"></script>
+    <script src="/js/dark-mode.js"></script>
     
   
 

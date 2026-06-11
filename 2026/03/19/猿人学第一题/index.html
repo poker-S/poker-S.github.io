@@ -2,6 +2,13 @@
 <html lang="zh-cn">
   <head>
     <meta charset="utf8"/>
+    <script>
+      (function(){
+        var t = localStorage.getItem('theme');
+        if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
     
     <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
     <title>
@@ -90,6 +97,7 @@
               <a class="nav-menu-item" href='/cv/'>简历</a>
             
           </div>
+          <button class="theme-toggle" id="themeToggle" aria-label="切换主题"></button>
         </div>
         <label class="nav-btn" for="navBtn"></label>
       </div>
@@ -173,7 +181,19 @@
     
     <div class="post-nav">
   
-    <div class="post-nav-item-left"></div>
+    <a class="post-nav-item-left" href="/2026/06/11/%E4%B8%B0%E5%B7%A2%E6%BB%91%E5%9D%97/">
+      <div class="text-align">
+        <svg t="1670570876164"
+             class="icon"
+             viewBox="0 0 1024 1024"
+             width="16"
+             height="16">
+          <path d="M384 512L731.733333 202.666667c17.066667-14.933333 19.2-42.666667 4.266667-59.733334-14.933333-17.066667-42.666667-19.2-59.733333-4.266666l-384 341.333333c-10.666667 8.533333-14.933333 19.2-14.933334 32s4.266667 23.466667 14.933334 32l384 341.333333c8.533333 6.4 19.2 10.666667 27.733333 10.666667 12.8 0 23.466667-4.266667 32-14.933333 14.933333-17.066667 14.933333-44.8-4.266667-59.733334L384 512z" p-id="14596" />
+        </svg>
+        <span class="text-small">上一篇</span>
+      </div>
+      <div>丰巢滑块纯算</div>
+    </a>
   
   <div class="vhr"></div>
   
@@ -202,7 +222,7 @@
 </div>
   <div class="realated__body">
     
-      <div class="null"><div class="null-item"><div class="null-title"><a href="\2026\01\13\第一篇博客\" title="一切的开始" rel="bookmark">一切的开始</a></div></div><div class="null-item"><div class="null-title"><a href="\2026\02\11\ast反混淆之常用api的使用\" title="ast反混淆之常用api的使用" rel="bookmark">ast反混淆之常用api的使用</a></div></div></div>
+      <div class="null"><div class="null-item"><div class="null-title"><a href="\2026\02\11\ast反混淆之常用api的使用\" title="ast反混淆之常用api的使用" rel="bookmark">ast反混淆之常用api的使用</a></div></div><div class="null-item"><div class="null-title"><a href="\2026\02\26\爱某网逆向分析全流程\" title="爱某网逆向分析全流程" rel="bookmark">爱某网逆向分析全流程</a></div></div></div>
     
   </div>
 </div>
@@ -391,6 +411,7 @@
       </script>
     
     <script src="/js/copy-code.js"></script>
+    <script src="/js/dark-mode.js"></script>
     
   
 

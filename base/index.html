@@ -2,6 +2,13 @@
 <html lang="zh-cn">
   <head>
     <meta charset="utf8"/>
+    <script>
+      (function(){
+        var t = localStorage.getItem('theme');
+        if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
     
     <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
     <title>
@@ -89,6 +96,7 @@
               <a class="nav-menu-item" href='/cv/'>简历</a>
             
           </div>
+          <button class="theme-toggle" id="themeToggle" aria-label="切换主题"></button>
         </div>
         <label class="nav-btn" for="navBtn"></label>
       </div>
@@ -295,6 +303,7 @@
       </script>
     
     <script src="/js/copy-code.js"></script>
+    <script src="/js/dark-mode.js"></script>
     
   
 
