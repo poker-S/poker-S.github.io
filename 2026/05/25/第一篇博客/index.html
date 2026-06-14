@@ -13,7 +13,7 @@
     <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
     <title>
       
-        思考 | PokerS
+        一切的开始 | PokerS
       
     </title>
     <meta name="description" content="PokerS 的水墨札记 —— Web 逆向、AST 反混淆与自动化"/>
@@ -66,7 +66,8 @@
           href='/css/layout.css'/>
     
     
-  <link rel="stylesheet" type="text/css" href="/css/category.css" />
+  <link rel="stylesheet" type="text/css" href="/css/post.css"/>
+  
 
   <meta name="generator" content="Hexo 8.1.1"></head>
   <body>
@@ -127,32 +128,142 @@
     </div>
     <div class="body">
       
-  <div class="wall wall-category--plain">
-    <div class="wall-main">
-      <div class="wall-category-title">
-        <div class="title-icon"
-             style="background-image: url(/images/icon/icon-pi.svg)"></div>
-        思考
-      </div>
-      <div class="wall-category-description">关于我的一些心路</div>
-      <div class="wall-category-tags">
-        <div id="tags-outer"></div>
-      </div>
-    </div>
-  </div>
-  
-    <section class="pond" aria-label="观心墨池">
-      <div class="pond-water" id="pondWater">
-        <div class="ripple-layer" id="rippleLayer" aria-hidden="true"></div>
-        <div class="pond-verse" id="pondVerse">行到水穷处，坐看云起时</div>
-        <span class="pond-seal ink-seal">观心</span>
-        <div class="pond-hint">点水 · 观心</div>
-      </div>
-    </section>
-  
-  <div class="post-list">
-    
+  <div class="read-progress" aria-hidden="true"><span class="read-progress__bar" id="readProgressBar"></span></div>
+  <article class="post-content">
+    <div class="post-shell">
+
       
+      <aside class="post-rail post-rail--left" aria-hidden="true">
+        <div class="rail-sticky">
+          <span class="rail-seal ink-seal">一</span>
+          <span class="rail-vtitle">一切的开始</span>
+          <span class="rail-meta">修心不在岁月</span>
+          <span class="rail-meta rail-meta--author">PokerS</span>
+          <svg class="rail-hill" viewBox="0 0 60 220" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path d="M30 0 L30 220" class="rail-hill__line"/>
+            <path d="M8 210 C20 150 26 150 30 120 C34 150 40 150 52 210 Z" class="rail-hill__peak"/>
+          </svg>
+        </div>
+      </aside>
+
+      
+      <div class="post-main">
+        <div class="post-content__head">
+          <div class="post-title">一切的开始</div>
+          <svg class="post-title__brush ink-art" viewBox="0 0 120 14" aria-hidden="true" focusable="false">
+            <path class="ink-stroke" data-stroke-order="0" filter="url(#ink-bleed-soft)"
+                  fill="none" stroke-width="4" stroke-linecap="round"
+                  d="M2 9 C28 3 60 3 86 7 C100 9 110 8 118 5"/>
+          </svg>
+          <div class="post-info">
+            
+  
+
+
+            <span class="post-date">修心不在岁月，在于道行</span>
+          </div>
+        </div>
+
+        
+        <details class="post-toc-inline">
+          <summary>目录</summary>
+          <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E5%85%B3%E4%BA%8E%E6%88%91"><span class="post-toc-text">关于我</span></a></li></ol>
+        </details>
+
+        <div class="post-content__body" id="postBody">
+          
+            <div class="post-gallery">
+              
+            </div>
+          
+          <h1 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h1><p>一个神秘的男子，从这一天开始，它创立了这个博客</p>
+
+        </div>
+      </div>
+
+      
+      <aside class="post-rail post-rail--right">
+        <div class="rail-sticky">
+          <div class="toc-title">目录</div>
+          <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#%E5%85%B3%E4%BA%8E%E6%88%91"><span class="post-toc-text">关于我</span></a></li></ol>
+          <button type="button" class="toc-top" id="tocTop">回到顶部</button>
+        </div>
+      </aside>
+
+    </div>
+    
+      <script src='https://unpkg.com/mermaid@latest/dist/mermaid.min.js'></script>
+      <script>
+        if (window.mermaid) {
+          mermaid.initialize({"startOnload":true});
+        }
+      </script>
+    
+  </article>
+  <div class="post__foot">
+    
+      <div class="like-author">
+  <input type="checkbox" id="likeCode" />
+  <div class="author-face">
+    <img height="100px"
+         width="100px"
+         id="front-face"
+         alt="author face"
+         src="/assets/author-face.jpg" />
+    <img height="100px"
+         width="100px"
+         id="back-face"
+         alt="like code"
+         src="/assets/pay-code.jpg" />
+  </div>
+  <div class="like-text">“给作者倒杯卡布奇诺”</div>
+  <label for="likeCode" class="like-btn">
+    <svg viewBox="0 0 1024 1024"
+         width="20px"
+         style="margin-right: 10px"
+         height="20px">
+      <path d="M466.88 908.96L113.824 563.296a270.08 270.08 0 0 1 0-387.392c108.8-106.56 284.896-106.56 393.696 0 1.504 1.472 2.976 2.944 4.448 4.48 1.472-1.536 2.944-3.008 4.448-4.48 108.8-106.56 284.896-106.56 393.696 0a269.952 269.952 0 0 1 34.016 347.072l-387.392 385.6a64 64 0 0 1-89.92 0.384z" p-id="13650" fill="#ee4242" />
+    </svg>
+    喜欢作者
+  </label>
+</div>
+
+    
+    <div class="post-nav">
+  
+    <a class="post-nav-item-left" href="/2026/05/29/ast%E5%8F%8D%E6%B7%B7%E6%B7%86%E4%B9%8B%E5%B8%B8%E7%94%A8api%E7%9A%84%E4%BD%BF%E7%94%A8/">
+      <div class="text-align">
+        <svg t="1670570876164"
+             class="icon"
+             viewBox="0 0 1024 1024"
+             width="16"
+             height="16">
+          <path d="M384 512L731.733333 202.666667c17.066667-14.933333 19.2-42.666667 4.266667-59.733334-14.933333-17.066667-42.666667-19.2-59.733333-4.266666l-384 341.333333c-10.666667 8.533333-14.933333 19.2-14.933334 32s4.266667 23.466667 14.933334 32l384 341.333333c8.533333 6.4 19.2 10.666667 27.733333 10.666667 12.8 0 23.466667-4.266667 32-14.933333 14.933333-17.066667 14.933333-44.8-4.266667-59.733334L384 512z" p-id="14596" />
+        </svg>
+        <span class="text-small">上一篇</span>
+      </div>
+      <div>ast反混淆之常用api的使用</div>
+    </a>
+  
+  <div class="vhr"></div>
+  
+    <div class="post-nav-item-right"></div>
+  
+</div>
+
+    
+      <div class="related-post">
+  <div class="related__head">
+  
+
+</div>
+  <div class="realated__body">
+    
+      <div class="null"><div class="null-item"><div class="null-title"><a href="\2026\05\29\ast反混淆之常用api的使用\" title="ast反混淆之常用api的使用" rel="bookmark">ast反混淆之常用api的使用</a></div></div><div class="null-item"><div class="null-title"><a href="\2026\06\12\丰巢滑块\" title="丰巢滑块纯算" rel="bookmark">丰巢滑块纯算</a></div></div></div>
+    
+  </div>
+</div>
+
     
     
   </div>
@@ -340,11 +451,7 @@
     <script src="/js/dark-mode.js"></script>
     <script src="/js/ink.js"></script>
     
-  
-    <script>window.__pondVerses = ["行到水穷处，坐看云起时","千江有水千江月，万里无云万里天","竹密不妨流水过，山高岂碍白云飞","莫听穿林打叶声，何妨吟啸且徐行","宠辱不惊，看庭前花开花落；去留无意，望天上云卷云舒","山重水复疑无路，柳暗花明又一村","纸上得来终觉浅，绝知此事要躬行","千淘万漉虽辛苦，吹尽狂沙始到金","不忘初心，方得始终","大道至简，悟在天成"];</script>
-    <script src="/js/pond.js"></script>
-    <script src="/js/ink-fish.js"></script>
-  
+  <script src="/js/toc.js"></script>
   
 
   </body>

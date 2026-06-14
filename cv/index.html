@@ -1,9 +1,46 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-  <meta charset="utf-8" />
-  <meta name="keywords" content="简历,PokerS" />
-  <meta name="description" content="PokerS的简历" />
   <head>
+    <meta charset="utf8"/>
+    <script>
+      (function(){
+        var t = localStorage.getItem('theme');
+        if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
+    
+    <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+    <title>
+      
+        关于我 | PokerS
+      
+    </title>
+    <meta name="description" content="PokerS 的水墨札记 —— Web 逆向、AST 反混淆与自动化"/>
+    <meta name="keywords" content="Web逆向,JS逆向,AST反混淆,爬虫,自动化,PokerS"/>
+    
+      <link rel="apple-touch-icon"
+            sizes="180x180"
+            href="/images/apple-touch-icon.png"/>
+    
+    
+      <link rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/images/favicon-32x32.png"/>
+    
+    
+      <link rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/images/favicon-16x16.png"/>
+    
+    
+      <link rel="mask-icon"
+            href="/images/logo.svg"
+            color=""/>
+    
+    
     
       
   <style>
@@ -24,620 +61,553 @@
 
 
     
-    <link rel="stylesheet" href="/css/cv.css" />
-    <title>PokerS的简历</title>
-    <style>svg:not(:root).svg-inline--fa {
-  overflow: visible;
-}
+    <link rel="stylesheet"
+          type="text/css"
+          href='/css/layout.css'/>
+    
+    
+  <link rel="stylesheet" type="text/css" href="/css/cv.css"/>
 
-.svg-inline--fa {
-  display: inline-block;
-  font-size: inherit;
-  height: 1em;
-  overflow: visible;
-  vertical-align: -0.125em;
-}
-.svg-inline--fa.fa-lg {
-  vertical-align: -0.225em;
-}
-.svg-inline--fa.fa-w-1 {
-  width: 0.0625em;
-}
-.svg-inline--fa.fa-w-2 {
-  width: 0.125em;
-}
-.svg-inline--fa.fa-w-3 {
-  width: 0.1875em;
-}
-.svg-inline--fa.fa-w-4 {
-  width: 0.25em;
-}
-.svg-inline--fa.fa-w-5 {
-  width: 0.3125em;
-}
-.svg-inline--fa.fa-w-6 {
-  width: 0.375em;
-}
-.svg-inline--fa.fa-w-7 {
-  width: 0.4375em;
-}
-.svg-inline--fa.fa-w-8 {
-  width: 0.5em;
-}
-.svg-inline--fa.fa-w-9 {
-  width: 0.5625em;
-}
-.svg-inline--fa.fa-w-10 {
-  width: 0.625em;
-}
-.svg-inline--fa.fa-w-11 {
-  width: 0.6875em;
-}
-.svg-inline--fa.fa-w-12 {
-  width: 0.75em;
-}
-.svg-inline--fa.fa-w-13 {
-  width: 0.8125em;
-}
-.svg-inline--fa.fa-w-14 {
-  width: 0.875em;
-}
-.svg-inline--fa.fa-w-15 {
-  width: 0.9375em;
-}
-.svg-inline--fa.fa-w-16 {
-  width: 1em;
-}
-.svg-inline--fa.fa-w-17 {
-  width: 1.0625em;
-}
-.svg-inline--fa.fa-w-18 {
-  width: 1.125em;
-}
-.svg-inline--fa.fa-w-19 {
-  width: 1.1875em;
-}
-.svg-inline--fa.fa-w-20 {
-  width: 1.25em;
-}
-.svg-inline--fa.fa-pull-left {
-  margin-right: 0.3em;
-  width: auto;
-}
-.svg-inline--fa.fa-pull-right {
-  margin-left: 0.3em;
-  width: auto;
-}
-.svg-inline--fa.fa-border {
-  height: 1.5em;
-}
-.svg-inline--fa.fa-li {
-  width: 2em;
-}
-.svg-inline--fa.fa-fw {
-  width: 1.25em;
-}
-
-.fa-layers svg.svg-inline--fa {
-  bottom: 0;
-  left: 0;
-  margin: auto;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-.fa-layers {
-  display: inline-block;
-  height: 1em;
-  position: relative;
-  text-align: center;
-  vertical-align: -0.125em;
-  width: 1em;
-}
-.fa-layers svg.svg-inline--fa {
-  -webkit-transform-origin: center center;
-          transform-origin: center center;
-}
-
-.fa-layers-counter, .fa-layers-text {
-  display: inline-block;
-  position: absolute;
-  text-align: center;
-}
-
-.fa-layers-text {
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  -webkit-transform-origin: center center;
-          transform-origin: center center;
-}
-
-.fa-layers-counter {
-  background-color: #ff253a;
-  border-radius: 1em;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  color: #fff;
-  height: 1.5em;
-  line-height: 1;
-  max-width: 5em;
-  min-width: 1.5em;
-  overflow: hidden;
-  padding: 0.25em;
-  right: 0;
-  text-overflow: ellipsis;
-  top: 0;
-  -webkit-transform: scale(0.25);
-          transform: scale(0.25);
-  -webkit-transform-origin: top right;
-          transform-origin: top right;
-}
-
-.fa-layers-bottom-right {
-  bottom: 0;
-  right: 0;
-  top: auto;
-  -webkit-transform: scale(0.25);
-          transform: scale(0.25);
-  -webkit-transform-origin: bottom right;
-          transform-origin: bottom right;
-}
-
-.fa-layers-bottom-left {
-  bottom: 0;
-  left: 0;
-  right: auto;
-  top: auto;
-  -webkit-transform: scale(0.25);
-          transform: scale(0.25);
-  -webkit-transform-origin: bottom left;
-          transform-origin: bottom left;
-}
-
-.fa-layers-top-right {
-  right: 0;
-  top: 0;
-  -webkit-transform: scale(0.25);
-          transform: scale(0.25);
-  -webkit-transform-origin: top right;
-          transform-origin: top right;
-}
-
-.fa-layers-top-left {
-  left: 0;
-  right: auto;
-  top: 0;
-  -webkit-transform: scale(0.25);
-          transform: scale(0.25);
-  -webkit-transform-origin: top left;
-          transform-origin: top left;
-}
-
-.fa-lg {
-  font-size: 1.3333333333em;
-  line-height: 0.75em;
-  vertical-align: -0.0667em;
-}
-
-.fa-xs {
-  font-size: 0.75em;
-}
-
-.fa-sm {
-  font-size: 0.875em;
-}
-
-.fa-1x {
-  font-size: 1em;
-}
-
-.fa-2x {
-  font-size: 2em;
-}
-
-.fa-3x {
-  font-size: 3em;
-}
-
-.fa-4x {
-  font-size: 4em;
-}
-
-.fa-5x {
-  font-size: 5em;
-}
-
-.fa-6x {
-  font-size: 6em;
-}
-
-.fa-7x {
-  font-size: 7em;
-}
-
-.fa-8x {
-  font-size: 8em;
-}
-
-.fa-9x {
-  font-size: 9em;
-}
-
-.fa-10x {
-  font-size: 10em;
-}
-
-.fa-fw {
-  text-align: center;
-  width: 1.25em;
-}
-
-.fa-ul {
-  list-style-type: none;
-  margin-left: 2.5em;
-  padding-left: 0;
-}
-.fa-ul > li {
-  position: relative;
-}
-
-.fa-li {
-  left: -2em;
-  position: absolute;
-  text-align: center;
-  width: 2em;
-  line-height: inherit;
-}
-
-.fa-border {
-  border: solid 0.08em #eee;
-  border-radius: 0.1em;
-  padding: 0.2em 0.25em 0.15em;
-}
-
-.fa-pull-left {
-  float: left;
-}
-
-.fa-pull-right {
-  float: right;
-}
-
-.fa.fa-pull-left,
-.fas.fa-pull-left,
-.far.fa-pull-left,
-.fal.fa-pull-left,
-.fab.fa-pull-left {
-  margin-right: 0.3em;
-}
-.fa.fa-pull-right,
-.fas.fa-pull-right,
-.far.fa-pull-right,
-.fal.fa-pull-right,
-.fab.fa-pull-right {
-  margin-left: 0.3em;
-}
-
-.fa-spin {
-  -webkit-animation: fa-spin 2s infinite linear;
-          animation: fa-spin 2s infinite linear;
-}
-
-.fa-pulse {
-  -webkit-animation: fa-spin 1s infinite steps(8);
-          animation: fa-spin 1s infinite steps(8);
-}
-
-@-webkit-keyframes fa-spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
-}
-
-@keyframes fa-spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
-}
-.fa-rotate-90 {
-  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg);
-}
-
-.fa-rotate-180 {
-  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
-  -webkit-transform: rotate(180deg);
-          transform: rotate(180deg);
-}
-
-.fa-rotate-270 {
-  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
-  -webkit-transform: rotate(270deg);
-          transform: rotate(270deg);
-}
-
-.fa-flip-horizontal {
-  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
-  -webkit-transform: scale(-1, 1);
-          transform: scale(-1, 1);
-}
-
-.fa-flip-vertical {
-  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
-  -webkit-transform: scale(1, -1);
-          transform: scale(1, -1);
-}
-
-.fa-flip-both, .fa-flip-horizontal.fa-flip-vertical {
-  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
-  -webkit-transform: scale(-1, -1);
-          transform: scale(-1, -1);
-}
-
-:root .fa-rotate-90,
-:root .fa-rotate-180,
-:root .fa-rotate-270,
-:root .fa-flip-horizontal,
-:root .fa-flip-vertical,
-:root .fa-flip-both {
-  -webkit-filter: none;
-          filter: none;
-}
-
-.fa-stack {
-  display: inline-block;
-  height: 2em;
-  position: relative;
-  width: 2.5em;
-}
-
-.fa-stack-1x,
-.fa-stack-2x {
-  bottom: 0;
-  left: 0;
-  margin: auto;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-.svg-inline--fa.fa-stack-1x {
-  height: 1em;
-  width: 1.25em;
-}
-.svg-inline--fa.fa-stack-2x {
-  height: 2em;
-  width: 2.5em;
-}
-
-.fa-inverse {
-  color: #fff;
-}
-
-.sr-only {
-  border: 0;
-  clip: rect(0, 0, 0, 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-
-.sr-only-focusable:active, .sr-only-focusable:focus {
-  clip: auto;
-  height: auto;
-  margin: 0;
-  overflow: visible;
-  position: static;
-  width: auto;
-}
-
-.svg-inline--fa .fa-primary {
-  fill: var(--fa-primary-color, currentColor);
-  opacity: 1;
-  opacity: var(--fa-primary-opacity, 1);
-}
-
-.svg-inline--fa .fa-secondary {
-  fill: var(--fa-secondary-color, currentColor);
-  opacity: 0.4;
-  opacity: var(--fa-secondary-opacity, 0.4);
-}
-
-.svg-inline--fa.fa-swap-opacity .fa-primary {
-  opacity: 0.4;
-  opacity: var(--fa-secondary-opacity, 0.4);
-}
-
-.svg-inline--fa.fa-swap-opacity .fa-secondary {
-  opacity: 1;
-  opacity: var(--fa-primary-opacity, 1);
-}
-
-.svg-inline--fa mask .fa-primary,
-.svg-inline--fa mask .fa-secondary {
-  fill: black;
-}
-
-.fad.fa-inverse {
-  color: #fff;
-}</style>
   <meta name="generator" content="Hexo 8.1.1"></head>
-  
   <body>
-    <div class="paper">
-      <header>
-        <div class="title">PokerS</div>
-        <div class="base-info">
-          <div class="info-item">内蒙古工业大学</div><div class="info-item">大二在读</div><div class="info-item">Web逆向工程师</div><div class="info-item">全栈独立开发者</div>
+    
+
+<svg class="ink-defs" width="0" height="0" aria-hidden="true" focusable="false"
+     style="position:absolute;width:0;height:0;overflow:hidden">
+  <defs>
+    
+    <filter id="ink-bleed" x="-25%" y="-25%" width="150%" height="150%"
+            filterUnits="objectBoundingBox" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.013 0.021"
+                    numOctaves="2" seed="7" stitchTiles="stitch" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="5"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    
+    <filter id="ink-bleed-soft" x="-20%" y="-20%" width="140%" height="140%"
+            filterUnits="objectBoundingBox" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02 0.03"
+                    numOctaves="2" seed="3" stitchTiles="stitch" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"/>
+    
+    
+    <div class=head>
+      <div class="nav">
+        <a href='/' class="nav-logo">
+          <img alt="logo" height="60px" width="60px" src="/images/logo.svg"/>
+        </a>
+        <input id="navBtn" type="checkbox"/>
+        <div class="nav-right">
+          
+            <div class="search-outer" id="algolia-search"></div>
+          
+          <div class="nav-menu">
+            
+              
+                <a class="nav-menu-item" href="/feat">文章</a>
+              
+                <a class="nav-menu-item" href="/base">思考</a>
+              
+            
+            
+              <a class="nav-menu-item" href='/cv/'>关于我</a>
+            
+          </div>
+          <button class="theme-toggle" id="themeToggle" aria-label="切换主题"></button>
         </div>
-        <div class="links">
-          
-            <a href="tel:先不放出来" class="text-link">
-              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="mobile" class="svg-inline--fa fa-mobile fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M272 0H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h224c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48zM160 480c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"></path></svg>
-            先不放出来</a>
-          
-          
-            <a href="mailto:1292549997@qq.com" class="text-link">
-              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="envelope" class="svg-inline--fa fa-envelope fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg>
-              1292549997@qq.com
-            </a>
-          
-          
-            <a target="_blank" rel="noopener" href="https://github.com/Poker-s" class="text-link">
-              <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" class="svg-inline--fa fa-github fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
-              Poker-s
-            </a>
-          
-          
-            <a target="_blank" rel="noopener" href="https://poker-s.github.io/" class="text-link">
-              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="blog" class="svg-inline--fa fa-blog fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M172.2 226.8c-14.6-2.9-28.2 8.9-28.2 23.8V301c0 10.2 7.1 18.4 16.7 22 18.2 6.8 31.3 24.4 31.3 45 0 26.5-21.5 48-48 48s-48-21.5-48-48V120c0-13.3-10.7-24-24-24H24c-13.3 0-24 10.7-24 24v248c0 89.5 82.1 160.2 175 140.7 54.4-11.4 98.3-55.4 109.7-109.7 17.4-82.9-37-157.2-112.5-172.2zM209 0c-9.2-.5-17 6.8-17 16v31.6c0 8.5 6.6 15.5 15 15.9 129.4 7 233.4 112 240.9 241.5.5 8.4 7.5 15 15.9 15h32.1c9.2 0 16.5-7.8 16-17C503.4 139.8 372.2 8.6 209 0zm.3 96c-9.3-.7-17.3 6.7-17.3 16.1v32.1c0 8.4 6.5 15.3 14.8 15.9 76.8 6.3 138 68.2 144.9 145.2.8 8.3 7.6 14.7 15.9 14.7h32.2c9.3 0 16.8-8 16.1-17.3-8.4-110.1-96.5-198.2-206.6-206.7z"></path></svg>
-              PokerS
-            </a>
-          
-        </div>
-      </header>
-      <article>
-        
-        <div class="chapter">
-          <div class="chapter-title">
-            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="graduation-cap" class="svg-inline--fa fa-graduation-cap fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M622.34 153.2L343.4 67.5c-15.2-4.67-31.6-4.67-46.79 0L17.66 153.2c-23.54 7.23-23.54 38.36 0 45.59l48.63 14.94c-10.67 13.19-17.23 29.28-17.88 46.9C38.78 266.15 32 276.11 32 288c0 10.78 5.68 19.85 13.86 25.65L20.33 428.53C18.11 438.52 25.71 448 35.94 448h56.11c10.24 0 17.84-9.48 15.62-19.47L82.14 313.65C90.32 307.85 96 298.78 96 288c0-11.57-6.47-21.25-15.66-26.87.76-15.02 8.44-28.3 20.69-36.72L296.6 284.5c9.06 2.78 26.44 6.25 46.79 0l278.95-85.7c23.55-7.24 23.55-38.36 0-45.6zM352.79 315.09c-28.53 8.76-52.84 3.92-65.59 0l-145.02-44.55L128 384c0 35.35 85.96 64 192 64s192-28.65 192-64l-14.18-113.47-145.03 44.56z"></path></svg>
-            参赛获奖 & 社区影响力
-          </div>
-          <div class="section">
-            <p>2025年蓝桥杯c/c++大学B组省三</p><p>2025年睿抗个人编程赛省三</p><p>2025年内蒙古志愿者服务项目大赛（主讲人）省金，内蒙古各机关单位主讲人总排名第四</p><p>吾爱破解论坛优秀文章×1、高亮文章×1</p><p>微信公众号「虫队长」百余位粉丝</p><p>猿人学内部练习平台完成28题</p>
-          </div>
-        </div>
-        
-          <div class="chapter">
-            <div class="chapter-title">
-              
-                
-                  
-                
-              
-              逆向经验
-              
-            </div>
-            
-              
-                <a href="#" class="section__head">
-                  <div class="section-title">核心技能</div>
-                  <div class="section-title-des">JavaScript逆向、AST反混淆、验证码对抗</div>
-                </a>
-                <p>逆向能力： 熟练掌握JS逆向分析，能应对无限debugger、JSFuck、表情包、OB混淆及JSVMP。实战完成猫眼票房、万达影院等院线网站接口逆向。</p><p>AST反混淆： 精通AST，使用Babel插件对极验3、爱尔兰航空、猿人学反混淆练习平台等网站进行反混淆处理，代码反混淆程度>80%。</p><p>算法掌握： 精通RSA、AES、SHA、MD5等标准加密算法及自定义逻辑还原。</p><p>验证码对抗： 使用ddddocr完成轨迹及点选验证码识别，具备使用ddddocr开源训练器训练自定义识别模型的能力。</p><p>AI逆向： 具备结合AI辅助逆向分析的能力，提升逆向效率。</p><p>工具使用： 熟练使用Chrome DevTools、Fiddler、Charles等抓包与调试工具。</p>
-              
-            
-          </div>
-        
-          <div class="chapter">
-            <div class="chapter-title">
-              
-                
-                  
-                
-              
-              自动化经历
-              <div class="tips">请点击项目名称查看项目详情（跳转链接暂未设置）</div>
-            </div>
-            
-              
-                <a target="_blank" rel="noopener" href="https://so.gushiwen.cn/shiwenv_d59ec5d6c91c.aspx" class="section__head">
-                  <div class="section-title">DrissionPage自动化</div>
-                  <div class="section-title-des">基于DP为主的多开、监听、查找、点击等</div>
-                </a>
-                <p>实现了如某音弹幕实时监听爬取（注入JS从而实现控制台输出）</p><p>BS直聘的招聘信息抓取（暂未实现风控绕过无法解决封账号问题）</p><p>123某6的抢票（秒级实现）</p>
-              
-            
-          </div>
-        
-          <div class="chapter">
-            <div class="chapter-title">
-              
-                
-                  
-                
-              
-              项目经历
-              
-            </div>
-            
-              
-                <a target="_blank" rel="noopener" href="https://markdowneditor.cloud/" class="section__head">
-                  <div class="section-title">Markdown在线编辑器（已上线运营）</div>
-                  <div class="section-title-des">独立全栈开发，AI辅助完成从开发到部署的完整流程</div>
-                </a>
-                <p>基于React 18 + CodeMirror 6 + Vite构建的Mac风格Markdown在线编辑器，支持实时预览、代码高亮、KaTeX数学公式渲染。</p><p>集成可视化插入（Word风格所见即所得）、表格生成器、数学公式库，降低Markdown使用门槛。</p><p>支持一键复制微信公众号富文本格式和吾爱破解BBCode格式，适配多平台发布需求。</p><p>图片存储支持三种模式：Cloudflare R2短链接上传、内嵌Base64、本地文件引用；后端使用Cloudflare Worker + R2对象存储。</p><p>具备完整的工程化能力：Git版本管理、Vite构建打包、Cloudflare Pages部署、域名配置与上线运维。</p>
-              
-                <a href="#" class="section__head">
-                  <div class="section-title">MCP高危工具治理运行时（在研）</div>
-                  <div class="section-title-des">面向研发工作站与内网工程场景的安全治理系统</div>
-                </a>
-                <p>正在研发的大创项目，定位为本地优先的MCP高危工具治理运行时。</p><p>通过接入审查、风险判定、分域执行、动态授权、来源约束、审计回放和恢复语义，对高危MCP工具链进行运行时收口。</p><p>技术栈涉及Rust/Go、Cedar/OPA策略引擎、Wasmtime/gVisor执行域、OpenTelemetry审计、React控制台。</p>
-              
-            
-          </div>
-        
-          <div class="chapter">
-            <div class="chapter-title">
-              
-                
-                  
-                
-              
-              GPA
-              
-            </div>
-            
-              
-                <ul class="section">
-                  <li>3.82</li>
-                </ul>
-              
-            
-          </div>
-        
-          <div class="chapter">
-            <div class="chapter-title">
-              
-                
-                  
-                
-              
-              个人小结
-              
-            </div>
-            
-              
-                <div class="section">
-                  <p>大二在校生，专注Web安全与逆向工程方向，精通JS逆向与AST反混淆。具备全栈独立开发与项目上线运维能力，擅长结合AI提升开发与逆向效率。拥有活跃的技术社区影响力（公众号、吾爱论坛）。</p>
-                </div>
-              
-            
-          </div>
-        
-      </article>
-      <footer>
-        <a class="online-link" href="http://example.com/cv">查看在线简历获得实时更新</a>
-        <a class="enginer"
-           target="_blank" rel="noopener" href="https://github.com/hooozen/hexo-theme-tranquility">Generate by Tranquility</a>
-      </footer>
+        <label class="nav-btn" for="navBtn"></label>
+      </div>
     </div>
+    <div class="body">
+      
+<main class="scape" id="scape">
+
+  
+  <div class="scape-bg" aria-hidden="true">
+    <svg class="ridge ridge-far" viewBox="0 0 1440 260" preserveAspectRatio="none">
+      <path d="M0 150 C220 70 430 140 700 96 C1000 46 1210 140 1440 88 V260 H0 Z"/>
+    </svg>
+    <svg class="ridge ridge-mid" viewBox="0 0 1440 260" preserveAspectRatio="none">
+      <path d="M0 184 C260 120 520 188 770 150 C1050 110 1250 190 1440 150 V260 H0 Z"/>
+    </svg>
+    <svg class="ridge ridge-near" viewBox="0 0 1440 260" preserveAspectRatio="none">
+      <path d="M0 214 C300 178 560 214 820 196 C1080 178 1270 216 1440 198 V260 H0 Z"/>
+    </svg>
+    <div class="page-mist"></div>
+  </div>
+
+  
+  <div class="trail" aria-hidden="true">
+    <div class="trail-sticky">
+      <svg class="trail-svg" viewBox="0 0 60 1000" preserveAspectRatio="none">
+        <path class="trail-bed" d="M30 4 C14 120 50 240 30 360 C12 480 50 600 30 720 C16 840 44 940 30 996"/>
+        <path class="trail-line ink-art-path" filter="url(#ink-bleed)"
+              d="M30 4 C14 120 50 240 30 360 C12 480 50 600 30 720 C16 840 44 940 30 996"/>
+      </svg>
+      <div class="trail-shrimp">
+
+<svg class="hero-shrimp ink-art" viewBox="0 0 360 240" aria-hidden="true"
+     focusable="false" preserveAspectRatio="xMidYMid meet">
+  <g class="ink-art__group" filter="url(#ink-bleed)"
+     fill="none" stroke="#20201d" stroke-linecap="round" stroke-linejoin="round">
+    
+    <path class="ink-stroke ink-stroke--body" data-stroke-order="0"
+          stroke-width="13" stroke="#2c2a25" opacity="0.92"
+          d="M70 96 C108 70 168 70 214 96 C246 118 268 142 286 170"/>
+    
+    <path class="ink-stroke ink-stroke--head" data-stroke-order="1"
+          stroke-width="9" stroke="#20201d"
+          d="M70 96 C58 110 58 132 74 150 C92 168 116 172 138 168"/>
+    
+    <path class="ink-stroke ink-stroke--tail" data-stroke-order="2"
+          stroke-width="6" stroke="#45423b"
+          d="M286 170 L312 154 M286 170 L320 178 M286 170 L300 200"/>
+    
+    <path class="ink-stroke ink-stroke--feeler" data-stroke-order="3"
+          stroke-width="2.4" stroke="#6f6a5f"
+          d="M70 100 C40 96 20 120 6 158"/>
+    <path class="ink-stroke ink-stroke--feeler" data-stroke-order="4"
+          stroke-width="2" stroke="#6f6a5f"
+          d="M76 108 C46 116 30 150 22 196"/>
+    <path class="ink-stroke ink-stroke--feeler" data-stroke-order="5"
+          stroke-width="1.6" stroke="#948d7e"
+          d="M84 116 C64 134 56 168 56 210"/>
+    
+    <circle class="ink-dot" cx="86" cy="92" r="3.2" fill="#a4352b" stroke="none"/>
+  </g>
+</svg>
+</div>
+      <span class="journey-bobbin"></span>
+    </div>
+  </div>
+
+  
+  <section class="station station--head reveal">
+    <span class="trail-node"></span>
+    <span class="station__mist"></span>
+    <div class="station__body">
+      <p class="station__kicker">引首 · 自报家门</p>
+      <h1 class="scape-name">PokerS</h1>
+      <span class="head-seal ink-seal">墨</span>
+      <ul class="base-info">
+        <li>内蒙古工业大学</li><li>大二在读</li><li>Web逆向工程师</li><li>全栈独立开发者</li>
+      </ul>
+      <div class="head-links">
+        <a class="ink-link" href="mailto:1292549997@qq.com">邮 · 1292549997@qq.com</a>
+        <a class="ink-link" href="https://github.com/Poker-s" target="_blank" rel="noopener">码 · github/Poker-s</a>
+        <a class="ink-link" href="https://poker-s.github.io/" target="_blank" rel="noopener">墨 · PokerS</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="ink-divider" role="separator"></div>
+
+  
+  
+  <section class="station station--skill reveal">
+    <span class="trail-node"></span>
+    <span class="station__mist"></span>
+    <div class="station__body">
+      <h2 class="station__title">修行 · 逆向经验</h2>
+      <p class="station__sub">JavaScript逆向、AST反混淆、验证码对抗</p>
+      <div class="ink-skills">
+        
+          
+          
+          
+          <div class="ink-skill" data-lv="0" tabindex="0" style="--w: 94%">
+            <div class="ink-skill__row">
+              <span class="ink-skill__name">逆向能力</span>
+              <span class="ink-skill__bar"><span class="ink-skill__fill"></span></span>
+            </div>
+            <div class="ink-skill__desc">熟练掌握JS逆向分析，能应对无限debugger、JSFuck、表情包、OB混淆及JSVMP。实战完成猫眼票房、万达影院等院线网站接口逆向。</div>
+          </div>
+        
+          
+          
+          
+          <div class="ink-skill" data-lv="0" tabindex="0" style="--w: 94%">
+            <div class="ink-skill__row">
+              <span class="ink-skill__name">AST反混淆</span>
+              <span class="ink-skill__bar"><span class="ink-skill__fill"></span></span>
+            </div>
+            <div class="ink-skill__desc">精通AST，使用Babel插件对极验3、爱尔兰航空、猿人学反混淆练习平台等网站进行反混淆处理，代码反混淆程度>80%。</div>
+          </div>
+        
+          
+          
+          
+          <div class="ink-skill" data-lv="1" tabindex="0" style="--w: 82%">
+            <div class="ink-skill__row">
+              <span class="ink-skill__name">算法掌握</span>
+              <span class="ink-skill__bar"><span class="ink-skill__fill"></span></span>
+            </div>
+            <div class="ink-skill__desc">精通RSA、AES、SHA、MD5等标准加密算法及自定义逻辑还原。</div>
+          </div>
+        
+          
+          
+          
+          <div class="ink-skill" data-lv="1" tabindex="0" style="--w: 82%">
+            <div class="ink-skill__row">
+              <span class="ink-skill__name">验证码对抗</span>
+              <span class="ink-skill__bar"><span class="ink-skill__fill"></span></span>
+            </div>
+            <div class="ink-skill__desc">使用ddddocr完成轨迹及点选验证码识别，具备使用ddddocr开源训练器训练自定义识别模型的能力。</div>
+          </div>
+        
+          
+          
+          
+          <div class="ink-skill" data-lv="2" tabindex="0" style="--w: 68%">
+            <div class="ink-skill__row">
+              <span class="ink-skill__name">AI逆向</span>
+              <span class="ink-skill__bar"><span class="ink-skill__fill"></span></span>
+            </div>
+            <div class="ink-skill__desc">具备结合AI辅助逆向分析的能力，提升逆向效率。</div>
+          </div>
+        
+          
+          
+          
+          <div class="ink-skill" data-lv="2" tabindex="0" style="--w: 68%">
+            <div class="ink-skill__row">
+              <span class="ink-skill__name">工具使用</span>
+              <span class="ink-skill__bar"><span class="ink-skill__fill"></span></span>
+            </div>
+            <div class="ink-skill__desc">熟练使用Chrome DevTools、Fiddler、Charles等抓包与调试工具。</div>
+          </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <div class="ink-divider" role="separator"></div>
+
+  
+  <section class="station station--works reveal">
+    <span class="trail-node"></span>
+    <span class="station__mist"></span>
+    <div class="station__body">
+      <h2 class="station__title">历练 · 自动化与项目</h2>
+      <div class="stele-forest">
+        
+          
+            
+            
+            <article class="stele">
+              
+              <h3 class="stele-title">DrissionPage自动化</h3>
+              <p class="stele-desc">基于DP为主的多开、监听、查找、点击等</p>
+              <ul class="stele-body">
+                <li>实现了如某音弹幕实时监听爬取（注入JS从而实现控制台输出）</li><li>BS直聘的招聘信息抓取（暂未实现风控绕过无法解决封账号问题）</li><li>123某6的抢票（秒级实现）</li>
+              </ul>
+              
+                <span class="stele-go">访问 →</span>
+                <a class="stele-link" href="https://so.gushiwen.cn/shiwenv_d59ec5d6c91c.aspx" target="_blank" rel="noopener" aria-label="访问 DrissionPage自动化"></a>
+              
+            </article>
+          
+        
+          
+            
+            
+            <article class="stele stele--online">
+              <span class="stele-stamp stele-stamp--online">上线</span>
+              
+              <h3 class="stele-title">Markdown在线编辑器（已上线运营）</h3>
+              <p class="stele-desc">独立全栈开发，AI辅助完成从开发到部署的完整流程</p>
+              <ul class="stele-body">
+                <li>基于React 18 + CodeMirror 6 + Vite构建的Mac风格Markdown在线编辑器，支持实时预览、代码高亮、KaTeX数学公式渲染。</li><li>集成可视化插入（Word风格所见即所得）、表格生成器、数学公式库，降低Markdown使用门槛。</li><li>支持一键复制微信公众号富文本格式和吾爱破解BBCode格式，适配多平台发布需求。</li><li>图片存储支持三种模式：Cloudflare R2短链接上传、内嵌Base64、本地文件引用；后端使用Cloudflare Worker + R2对象存储。</li><li>具备完整的工程化能力：Git版本管理、Vite构建打包、Cloudflare Pages部署、域名配置与上线运维。</li>
+              </ul>
+              
+                <span class="stele-go">访问 →</span>
+                <a class="stele-link" href="https://markdowneditor.cloud/" target="_blank" rel="noopener" aria-label="访问 Markdown在线编辑器（已上线运营）"></a>
+              
+            </article>
+          
+            
+            
+            <article class="stele stele--wip">
+              <span class="stele-stamp stele-stamp--wip">在研</span>
+              <h3 class="stele-title">MCP高危工具治理运行时（在研）</h3>
+              <p class="stele-desc">面向研发工作站与内网工程场景的安全治理系统</p>
+              <ul class="stele-body">
+                <li>正在研发的大创项目，定位为本地优先的MCP高危工具治理运行时。</li><li>通过接入审查、风险判定、分域执行、动态授权、来源约束、审计回放和恢复语义，对高危MCP工具链进行运行时收口。</li><li>技术栈涉及Rust/Go、Cedar/OPA策略引擎、Wasmtime/gVisor执行域、OpenTelemetry审计、React控制台。</li>
+              </ul>
+              
+            </article>
+          
+        
+      </div>
+    </div>
+  </section>
+
+  <div class="ink-divider" role="separator"></div>
+
+  
+  
+  <section class="station station--seals reveal">
+    <span class="trail-node"></span>
+    <span class="station__mist"></span>
+    <div class="station__body">
+      <h2 class="station__title">印记 · 参赛获奖 & 社区影响力</h2>
+      <div class="seal-forest">
+        
+          <div class="seal-card" data-seal tabindex="0" role="button" style="--i: 0">
+            <span class="seal-stamp ink-seal">印</span>
+            <span class="seal-text">2025年蓝桥杯c/c++大学B组省三</span>
+          </div>
+        
+          <div class="seal-card" data-seal tabindex="0" role="button" style="--i: 1">
+            <span class="seal-stamp ink-seal">印</span>
+            <span class="seal-text">2025年睿抗个人编程赛省三</span>
+          </div>
+        
+          <div class="seal-card" data-seal tabindex="0" role="button" style="--i: 2">
+            <span class="seal-stamp ink-seal">印</span>
+            <span class="seal-text">2025年内蒙古志愿者服务项目大赛（主讲人）省金，内蒙古各机关单位主讲人总排名第四</span>
+          </div>
+        
+          <div class="seal-card" data-seal tabindex="0" role="button" style="--i: 3">
+            <span class="seal-stamp ink-seal">印</span>
+            <span class="seal-text">吾爱破解论坛优秀文章×1、高亮文章×1</span>
+          </div>
+        
+          <div class="seal-card" data-seal tabindex="0" role="button" style="--i: 4">
+            <span class="seal-stamp ink-seal">印</span>
+            <span class="seal-text">微信公众号「虫队长」百余位粉丝</span>
+          </div>
+        
+          <div class="seal-card" data-seal tabindex="0" role="button" style="--i: 5">
+            <span class="seal-stamp ink-seal">印</span>
+            <span class="seal-text">猿人学内部练习平台完成28题</span>
+          </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <div class="ink-divider" role="separator"></div>
+
+  
+  
+  <section class="station station--colophon reveal">
+    <span class="trail-node"></span>
+    <span class="station__mist"></span>
+    <div class="station__body">
+      <h2 class="station__title">心迹 · 题跋</h2>
+      <div class="colophon-wrap">
+        <div class="colophon" id="colophon">
+          <div class="colophon-text">
+            <p>大二在校生，专注Web安全与逆向工程方向，精通JS逆向与AST反混淆。具备全栈独立开发与项目上线运维能力，擅长结合AI提升开发与逆向效率。拥有活跃的技术社区影响力（公众号、吾爱论坛）。</p>
+          </div>
+          <div class="colophon-sign">PokerS · 丙午年记</div>
+        </div>
+        <div class="gpa-ink" aria-label="绩点 3.82">
+          <span class="gpa-ink__tube"><span class="gpa-ink__fill"></span></span>
+          <span class="gpa-ink__num">3.82</span>
+          <span class="gpa-ink__label">绩点</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <a class="ink-btn scape-top" id="scapeTop" href="#scape">↑ 回卷首</a>
+</main>
+
+    </div>
+    <div class="foot">
+  <div class="foot-inner">
+    <div class="foot__head">
+      
+        <div class="foot-line">
+          <div class="matts">师</div><div class="matts">出</div><div class="matts">猿</div><div class="matts">人</div><div class="matts">学</div>
+        </div>
+      
+        <div class="foot-line">
+          <div class="matts">欢</div><div class="matts">迎</div><div class="matts">来</div><div class="matts">加</div><div class="matts">入</div>
+        </div>
+      
+    </div>
+    <div class="foot__body">
+      
+        <div class="foot-item">
+          <div class="foot-item__head">朋友</div>
+          <div class="foot-item__body">
+            
+            
+
+
+  
+  
+    <div class="foot-link-group">
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/icon/icon-link.svg" />
+            <a class="foot-link" target="_blank" rel="noopener" href="https://github.com/poker-S/poker-S.github.io">Theme Tranquility</a>
+          </div>
+        
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/icon/icon-link.svg" />
+            <a class="foot-link" href="https://poker-S.github.io">PokerS的主页</a>
+          </div>
+        
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/icon/icon-link+.svg" />
+            <a class="foot-link" href="mailto:zongyatong@gmail.com?subject=申请https://poker-s.github.io的友链">申请友链</a>
+          </div>
+        
+      
+        
+        
+      
+    </div>
+  
+
+
+          </div>
+        </div>
+      
+      
+        <div class="foot-item">
+          <div class="foot-item__head">账号</div>
+          <div class="foot-item__body">
+            
+
+
+  
+  
+    <div class="foot-link-group">
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/logo-github.svg" />
+            <a class="foot-link" target="_blank" rel="noopener" href="https://github.com/poker-S">Poker-S</a>
+          </div>
+        
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/logo-wx.svg" />
+            <a class="foot-link" target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dd71iLOnQWq_55hnX0F7Ow">虫队长</a>
+          </div>
+        
+      
+        
+        
+      
+        
+        
+      
+    </div>
+  
+
+
+          </div>
+        </div>
+      
+      <div class="foot-item">
+        <div class="foot-item__head">联系</div>
+        <div class="foot-item__body">
+          
+
+
+  
+  
+    <div class="foot-link-group">
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/icon/icon-email.svg" />
+            <a class="foot-link" href="">180004584@qq.com</a>
+          </div>
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+    </div>
+  
+
+
+        </div>
+      </div>
+    </div>
+    <div class="copyright">
+      <a href="https://poker-s.github.io">PokerS</a> &nbsp;|&nbsp;由&nbsp;<a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>&nbsp;及&nbsp;
+      <svg width="20" height="20" viewBox="0 0 725 725">
+        <path fill-rule="evenodd" fill="rgb(221, 221, 221)" d="M145.870,236.632 L396.955,103.578 L431.292,419.44 L156.600,522.53 L145.870,236.632 Z" />
+        <path fill-rule="evenodd" fill="rgb(159, 159, 159)" d="M396.955,103.578 L564.345,234.486 L611.558,513.469 L431.292,419.44 L396.955,103.578 Z" />
+        <path fill-rule="evenodd" fill="rgb(0, 0, 0)" d="M431.292,419.44 L611.558,513.469 L358.327,595.18 L156.600,522.53 L431.292,419.44 Z" />
+      </svg>
+      <a target="_blank" rel="noopener" href="https://github.com/hooozen/hexo-theme-tranquility">致远</a>&nbsp;驱动
+    </div>
+  </div>
+</div>
+
+    
+    
+      <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
+      <script type="text/javascript">
+        docsearch({
+          appId: 'appId',
+          apiKey: 'apiKey',
+          indexName: 'indexName',
+          insights: 'true',
+          container: 'div#algolia-search',
+          debug: 'false'
+        });
+      </script>
+    
+    <script src="/js/copy-code.js"></script>
+    <script src="/js/dark-mode.js"></script>
+    <script src="/js/ink.js"></script>
+    
+  <script src="/js/about.js"></script>
+  <script src="/js/ink-fish.js"></script>
+
   </body>
 </html>

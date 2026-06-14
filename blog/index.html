@@ -16,8 +16,8 @@
          | PokerS
       
     </title>
-    <meta name="description" content=""/>
-    <meta name="keywords" content=""/>
+    <meta name="description" content="PokerS 的水墨札记 —— Web 逆向、AST 反混淆与自动化"/>
+    <meta name="keywords" content="Web逆向,JS逆向,AST反混淆,爬虫,自动化,PokerS"/>
     
       <link rel="apple-touch-icon"
             sizes="180x180"
@@ -71,6 +71,30 @@
   <meta name="generator" content="Hexo 8.1.1"></head>
   <body>
     
+
+<svg class="ink-defs" width="0" height="0" aria-hidden="true" focusable="false"
+     style="position:absolute;width:0;height:0;overflow:hidden">
+  <defs>
+    
+    <filter id="ink-bleed" x="-25%" y="-25%" width="150%" height="150%"
+            filterUnits="objectBoundingBox" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.013 0.021"
+                    numOctaves="2" seed="7" stitchTiles="stitch" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="5"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    
+    <filter id="ink-bleed-soft" x="-20%" y="-20%" width="140%" height="140%"
+            filterUnits="objectBoundingBox" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02 0.03"
+                    numOctaves="2" seed="3" stitchTiles="stitch" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+
+    
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"/>
     
     
@@ -93,7 +117,7 @@
               
             
             
-              <a class="nav-menu-item" href='/cv/'>简历</a>
+              <a class="nav-menu-item" href='/cv/'>关于我</a>
             
           </div>
           <button class="theme-toggle" id="themeToggle" aria-label="切换主题"></button>
@@ -116,163 +140,234 @@
       </div>
     </div>
   </div>
+  
   <div class="post-list">
     
-      
+      <div class="p-grid">
   
-  <div class="post-card">
-    <div class="post__head">
-      <a href="/2026/06/11/%E4%B8%B0%E5%B7%A2%E6%BB%91%E5%9D%97/" class="post-title hover-line">丰巢滑块纯算</a>
-      
-    </div>
-    <div class="post__body">
-      
-        <a href="/2026/06/11/%E4%B8%B0%E5%B7%A2%E6%BB%91%E5%9D%97/"
-           class="post-cover"
-           style="background-image: url(/assets/images/57-1.jpg)"></a>
-      
-      <div class="post-excerpt"></div>
-    </div>
-    <div class="post__foot">
-      <div class="post-tags">
-  
+    
 
-</div>
-    </div>
-  </div>
-
+<div class="p-card reveal">
   
-  <div class="post-card">
-    <div class="post__head">
-      <a href="/2026/03/19/%E7%8C%BF%E4%BA%BA%E5%AD%A6%E7%AC%AC%E4%B8%80%E9%A2%98/" class="post-title hover-line">猿人学js混淆——源码乱码之m参数</a>
+    <a class="p-card-cover" href="/2026/06/12/%E4%B8%B0%E5%B7%A2%E6%BB%91%E5%9D%97/" aria-label="丰巢滑块纯算"
+       style="background-image: url(/assets/images/covers/litang-river.jpg)">
+      <span class="p-card-cover__veil"></span>
       
+    </a>
+  
+  <div class="p-card-body">
+    <a class="p-card-title" href="/2026/06/12/%E4%B8%B0%E5%B7%A2%E6%BB%91%E5%9D%97/">丰巢滑块纯算</a>
+    <div class="p-card-meta">
+      <span class="p-card-date">2026.06.12</span>
     </div>
-    <div class="post__body">
-      
-        <a href="/2026/03/19/%E7%8C%BF%E4%BA%BA%E5%AD%A6%E7%AC%AC%E4%B8%80%E9%A2%98/"
-           class="post-cover"
-           style="background-image: url(/assets/images/57-1.jpg)"></a>
-      
-      <div class="post-excerpt"></div>
-    </div>
-    <div class="post__foot">
-      <div class="post-tags">
+    <a class="p-card-excerpt" href="/2026/06/12/%E4%B8%B0%E5%B7%A2%E6%BB%91%E5%9D%97/">丰巢滑块纯算分析与探索目标网址​ aHR0cHM6Ly9mY2JveC5jb20vcGFnZXMvdXNlci9sb2dpbi5odG1s 抓包分析输入…</a>
+    <div class="p-card-tags">
   
 
 </div>
-    </div>
   </div>
+</div>
 
   
-  <div class="post-card">
-    <div class="post__head">
-      <a href="/2026/03/15/ddddocr-trainer%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/" class="post-title hover-line">ddddocr-trainer训练模型</a>
+    
+
+<div class="p-card reveal">
+  
+    <a class="p-card-cover" href="/2026/06/11/jsvmp%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B/" aria-label="tencent滑块——jsvmp实战"
+       style="background-image: url(/assets/images/covers/dongyuan-hall.jpg)">
+      <span class="p-card-cover__veil"></span>
       
+    </a>
+  
+  <div class="p-card-body">
+    <a class="p-card-title" href="/2026/06/11/jsvmp%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B/">tencent滑块——jsvmp实战</a>
+    <div class="p-card-meta">
+      <span class="p-card-date">2026.06.11</span>
     </div>
-    <div class="post__body">
-      
-        <a href="/2026/03/15/ddddocr-trainer%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/"
-           class="post-cover"
-           style="background-image: url(/assets/images/57-1.jpg)"></a>
-      
-      <div class="post-excerpt"></div>
-    </div>
-    <div class="post__foot">
-      <div class="post-tags">
+    <a class="p-card-excerpt" href="/2026/06/11/jsvmp%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B/">tencent滑块–jsvmp实战一、了解tencent滑块jsvmp初始化流程还是老规矩，先把源码放出来 1234567891011121314151…</a>
+    <div class="p-card-tags">
   
 
 </div>
-    </div>
   </div>
+</div>
 
   
-  <div class="post-card">
-    <div class="post__head">
-      <a href="/2026/03/12/%E7%8C%AB%E7%9C%BC%E7%A5%A8%E6%88%BF/" class="post-title hover-line">猫某票房signKey参数和mygsig参数逆向全流程</a>
+    
+
+<div class="p-card reveal">
+  
+    <a class="p-card-cover" href="/2026/06/11/jsvmp%E5%9F%BA%E7%A1%80%E7%AF%87/" aria-label="jsvmp基础篇"
+       style="background-image: url(/assets/images/covers/fang-divine.jpg)">
+      <span class="p-card-cover__veil"></span>
       
+    </a>
+  
+  <div class="p-card-body">
+    <a class="p-card-title" href="/2026/06/11/jsvmp%E5%9F%BA%E7%A1%80%E7%AF%87/">jsvmp基础篇</a>
+    <div class="p-card-meta">
+      <span class="p-card-date">2026.06.11</span>
     </div>
-    <div class="post__body">
-      
-        <a href="/2026/03/12/%E7%8C%AB%E7%9C%BC%E7%A5%A8%E6%88%BF/"
-           class="post-cover"
-           style="background-image: url(/assets/images/57-1.jpg)"></a>
-      
-      <div class="post-excerpt"></div>
-    </div>
-    <div class="post__foot">
-      <div class="post-tags">
+    <a class="p-card-excerpt" href="/2026/06/11/jsvmp%E5%9F%BA%E7%A1%80%E7%AF%87/">jsvmp基础篇一、什么是jsvmpJSVMP (Virtual Machine based code Protection for JavaScrip…</a>
+    <div class="p-card-tags">
   
 
 </div>
-    </div>
   </div>
+</div>
 
   
-  <div class="post-card">
-    <div class="post__head">
-      <a href="/2026/02/26/%E7%88%B1%E6%9F%90%E7%BD%91%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E5%85%A8%E6%B5%81%E7%A8%8B/" class="post-title hover-line">爱某网逆向分析全流程</a>
+    
+
+<div class="p-card reveal">
+  
+    <a class="p-card-cover" href="/2026/06/09/ddddocr-trainer%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/" aria-label="ddddocr-trainer训练模型"
+       style="background-image: url(/assets/images/covers/cao-snow.jpg)">
+      <span class="p-card-cover__veil"></span>
+      
+    </a>
+  
+  <div class="p-card-body">
+    <a class="p-card-title" href="/2026/06/09/ddddocr-trainer%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/">ddddocr-trainer训练模型</a>
+    <div class="p-card-meta">
+      <span class="p-card-date p-card-date--note">修心不在岁月，在于道行</span>
       
     </div>
-    <div class="post__body">
-      
-        <a href="/2026/02/26/%E7%88%B1%E6%9F%90%E7%BD%91%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E5%85%A8%E6%B5%81%E7%A8%8B/"
-           class="post-cover"
-           style="background-image: url(/assets/images/57-1.jpg)"></a>
-      
-      <div class="post-excerpt"></div>
-    </div>
-    <div class="post__foot">
-      <div class="post-tags">
+    <a class="p-card-excerpt" href="/2026/06/09/ddddocr-trainer%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/">下载压缩包并解压 https://github.com/sml2h3/dddd_trainer cmd进入 ddddocr-trainer安装Minic…</a>
+    <div class="p-card-tags">
   
 
 </div>
-    </div>
   </div>
+</div>
 
   
-  <div class="post-card">
-    <div class="post__head">
-      <a href="/2026/02/11/ast%E5%8F%8D%E6%B7%B7%E6%B7%86%E4%B9%8B%E5%B8%B8%E7%94%A8api%E7%9A%84%E4%BD%BF%E7%94%A8/" class="post-title hover-line">ast反混淆之常用api的使用</a>
+    
+
+<div class="p-card reveal">
+  
+    <a class="p-card-cover" href="/2026/06/07/%E7%88%B1%E6%9F%90%E7%BD%91%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E5%85%A8%E6%B5%81%E7%A8%8B/" aria-label="爱某网逆向分析全流程"
+       style="background-image: url(/assets/images/covers/fankuan-stream.jpg)">
+      <span class="p-card-cover__veil"></span>
+      
+    </a>
+  
+  <div class="p-card-body">
+    <a class="p-card-title" href="/2026/06/07/%E7%88%B1%E6%9F%90%E7%BD%91%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E5%85%A8%E6%B5%81%E7%A8%8B/">爱某网逆向分析全流程</a>
+    <div class="p-card-meta">
+      <span class="p-card-date p-card-date--note">修心不在岁月，在于道行</span>
       
     </div>
-    <div class="post__body">
-      
-        <a href="/2026/02/11/ast%E5%8F%8D%E6%B7%B7%E6%B7%86%E4%B9%8B%E5%B8%B8%E7%94%A8api%E7%9A%84%E4%BD%BF%E7%94%A8/"
-           class="post-cover"
-           style="background-image: url(/assets/images/57-1.jpg)"></a>
-      
-      <div class="post-excerpt"></div>
-    </div>
-    <div class="post__foot">
-      <div class="post-tags">
+    <a class="p-card-excerpt" href="/2026/06/07/%E7%88%B1%E6%9F%90%E7%BD%91%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E5%85%A8%E6%B5%81%E7%A8%8B/">爱某网逆向分析全流程 提示！本文章仅供学习交流，严禁用于任何商业和非法用途，未经许可禁止转载，禁止任何修改后二次传播，擅自使用本文讲解的技术而导致的任何…</a>
+    <div class="p-card-tags">
   
 
 </div>
-    </div>
   </div>
+</div>
 
   
-  <div class="post-card">
-    <div class="post__head">
-      <a href="/2026/01/13/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="post-title hover-line">一切的开始</a>
+    
+
+<div class="p-card reveal">
+  
+    <a class="p-card-cover" href="/2026/06/05/%E7%8C%AB%E7%9C%BC%E7%A5%A8%E6%88%BF/" aria-label="猫某票房signKey参数和mygsig参数逆向全流程"
+       style="background-image: url(/assets/images/covers/wuzhen-pines.jpg)">
+      <span class="p-card-cover__veil"></span>
+      
+    </a>
+  
+  <div class="p-card-body">
+    <a class="p-card-title" href="/2026/06/05/%E7%8C%AB%E7%9C%BC%E7%A5%A8%E6%88%BF/">猫某票房signKey参数和mygsig参数逆向全流程</a>
+    <div class="p-card-meta">
+      <span class="p-card-date p-card-date--note">修心不在岁月，在于道行</span>
       
     </div>
-    <div class="post__body">
-      
-        <a href="/2026/01/13/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/"
-           class="post-cover"
-           style="background-image: url(/assets/images/57-1.jpg)"></a>
-      
-      <div class="post-excerpt"></div>
-    </div>
-    <div class="post__foot">
-      <div class="post-tags">
+    <a class="p-card-excerpt" href="/2026/06/05/%E7%8C%AB%E7%9C%BC%E7%A5%A8%E6%88%BF/">猫某票房逆向全流程 免责声明 本文章仅供学习交流，严禁用于任何商业和非法用途，未经许可禁止转载，禁止任何修改后二次传播，擅自使用本文讲解的技术而导致的任…</a>
+    <div class="p-card-tags">
   
 
 </div>
-    </div>
   </div>
+</div>
 
+  
+    
+
+<div class="p-card reveal">
+  
+    <a class="p-card-cover" href="/2026/06/02/%E7%8C%BF%E4%BA%BA%E5%AD%A6%E7%AC%AC%E4%B8%80%E9%A2%98/" aria-label="猿人学js混淆——源码乱码之m参数"
+       style="background-image: url(/assets/images/covers/nizan-studio.jpg)">
+      <span class="p-card-cover__veil"></span>
+      
+    </a>
+  
+  <div class="p-card-body">
+    <a class="p-card-title" href="/2026/06/02/%E7%8C%BF%E4%BA%BA%E5%AD%A6%E7%AC%AC%E4%B8%80%E9%A2%98/">猿人学js混淆——源码乱码之m参数</a>
+    <div class="p-card-meta">
+      <span class="p-card-date p-card-date--note">修心不在岁月，在于道行</span>
+      
+    </div>
+    <a class="p-card-excerpt" href="/2026/06/02/%E7%8C%BF%E4%BA%BA%E5%AD%A6%E7%AC%AC%E4%B8%80%E9%A2%98/">js混淆——源码乱码之m参数抓包进来之后会遇到第一个敌人，setInterval！直接never pause here也是直接看到了接口 找参数，反混淆…</a>
+    <div class="p-card-tags">
+  
+
+</div>
+  </div>
+</div>
+
+  
+    
+
+<div class="p-card reveal">
+  
+    <a class="p-card-cover" href="/2026/05/29/ast%E5%8F%8D%E6%B7%B7%E6%B7%86%E4%B9%8B%E5%B8%B8%E7%94%A8api%E7%9A%84%E4%BD%BF%E7%94%A8/" aria-label="ast反混淆之常用api的使用"
+       style="background-image: url(/assets/images/covers/juran-mountains.jpg)">
+      <span class="p-card-cover__veil"></span>
+      
+    </a>
+  
+  <div class="p-card-body">
+    <a class="p-card-title" href="/2026/05/29/ast%E5%8F%8D%E6%B7%B7%E6%B7%86%E4%B9%8B%E5%B8%B8%E7%94%A8api%E7%9A%84%E4%BD%BF%E7%94%A8/">ast反混淆之常用api的使用</a>
+    <div class="p-card-meta">
+      <span class="p-card-date p-card-date--note">修心不在岁月，在于道行</span>
+      
+    </div>
+    <a class="p-card-excerpt" href="/2026/05/29/ast%E5%8F%8D%E6%B7%B7%E6%B7%86%E4%B9%8B%E5%B8%B8%E7%94%A8api%E7%9A%84%E4%BD%BF%E7%94%A8/">ast反混淆杂谈（二）本期我们主要探讨三个方向：（1）Path（2）types（3）scope Path1.什么是PathPath并不是 AST 树物理…</a>
+    <div class="p-card-tags">
+  
+
+</div>
+  </div>
+</div>
+
+  
+    
+
+<div class="p-card reveal">
+  
+    <a class="p-card-cover" href="/2026/05/25/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" aria-label="一切的开始"
+       style="background-image: url(/assets/images/covers/moonlight-mountain.jpg)">
+      <span class="p-card-cover__veil"></span>
+      
+    </a>
+  
+  <div class="p-card-body">
+    <a class="p-card-title" href="/2026/05/25/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">一切的开始</a>
+    <div class="p-card-meta">
+      <span class="p-card-date p-card-date--note">修心不在岁月，在于道行</span>
+      
+    </div>
+    <a class="p-card-excerpt" href="/2026/05/25/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">关于我一个神秘的男子，从这一天开始，它创立了这个博客</a>
+    <div class="p-card-tags">
+  
+
+</div>
+  </div>
+</div>
+
+  
+</div>
 
     
     
@@ -323,7 +418,7 @@
                  height="20px"
                  width="20px"
                  src="/images/icon/icon-link.svg" />
-            <a class="foot-link" target="_blank" rel="noopener" href="https://poker-S.github.io">PokerS的主页</a>
+            <a class="foot-link" href="https://poker-S.github.io">PokerS的主页</a>
           </div>
         
       
@@ -334,7 +429,7 @@
                  height="20px"
                  width="20px"
                  src="/images/icon/icon-link+.svg" />
-            <a class="foot-link" href="mailto:zongyatong@gmail.com?subject=申请http://example.com的友链">申请友链</a>
+            <a class="foot-link" href="mailto:zongyatong@gmail.com?subject=申请https://poker-s.github.io的友链">申请友链</a>
           </div>
         
       
@@ -432,7 +527,7 @@
       </div>
     </div>
     <div class="copyright">
-      <a href="http://example.com">PokerS</a> &nbsp;|&nbsp;由&nbsp;<a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>&nbsp;及&nbsp;
+      <a href="https://poker-s.github.io">PokerS</a> &nbsp;|&nbsp;由&nbsp;<a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>&nbsp;及&nbsp;
       <svg width="20" height="20" viewBox="0 0 725 725">
         <path fill-rule="evenodd" fill="rgb(221, 221, 221)" d="M145.870,236.632 L396.955,103.578 L431.292,419.44 L156.600,522.53 L145.870,236.632 Z" />
         <path fill-rule="evenodd" fill="rgb(159, 159, 159)" d="M396.955,103.578 L564.345,234.486 L611.558,513.469 L431.292,419.44 L396.955,103.578 Z" />
@@ -459,7 +554,9 @@
     
     <script src="/js/copy-code.js"></script>
     <script src="/js/dark-mode.js"></script>
+    <script src="/js/ink.js"></script>
     
+  
   
 
   </body>

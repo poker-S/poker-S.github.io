@@ -1,7 +1,7 @@
 html {
-  font-family: sans-serif;
+  font-family: sourceHanSerif, "Source Han Serif SC", "Songti SC", "STSong", serif;
   font-size: 18px;
-  color: #555;
+  color: #45423b;
   text-align: justify;
   scroll-behavior: smooth;
 }
@@ -15,16 +15,16 @@ body {
   justify-content: space-between;
 }
 a {
-  color: #555;
+  color: #45423b;
 }
 a:hover {
-  color: #222;
+  color: #a4352b;
 }
 blockquote {
-  border-left: 4px solid #ddd;
+  border-left: 4px solid #d8cfbd;
   margin: 0;
   padding-left: 1em;
-  color: #666;
+  color: #6f6a5f;
 }
 iframe,
 img,
@@ -43,7 +43,7 @@ td,
 th {
   padding: 8px;
   vertical-align: middle;
-  border: 1px solid #ddd;
+  border: 1px solid #d8cfbd;
 }
 caption {
   border: none;

@@ -1,40 +1,52 @@
+/* ===================== 子页页眉 ===================== */
 .wall-category--plain {
   height: auto;
   width: auto;
   display: block;
-  max-width: 900px;
-  padding: 0 20px;
-  margin: 20px auto;
+  max-width: 1200px;
+  padding: 70px 50px 10px;
+  margin: 0 auto;
 }
 .wall-category--plain .wall-category-title {
   align-items: center;
   justify-content: flex-start;
+  font-family: sourceHanSerif, "Source Han Serif SC", "Songti SC", serif;
   font-size: 2.5em;
   font-weight: bold;
+  color: #20201d;
+  letter-spacing: 0.1em;
 }
 .wall-category--plain .wall-category-title .title-icon {
   height: 1.666666666666667em;
   width: 1.666666666666667em;
-  margin-right: 10px;
+  margin-right: 14px;
+  opacity: 0.85;
 }
 .wall-category--plain .wall-category-description {
   text-align: left;
+  color: #6f6a5f;
+  letter-spacing: 0.12em;
+  margin-top: 12px;
 }
 .wall-category--plain #tags-outer a {
   text-decoration: none;
-  color: #2c5fa5;
+  color: #4a615c;
   display: inline-block;
-  margin-right: 8px;
+  margin-right: 10px;
   transition: color 200ms ease-out;
+}
+.wall-category--plain #tags-outer a:hover {
+  color: #a4352b;
 }
 .wall-category-title {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: sourceHanSerif, "Source Han Serif SC", "Songti SC", serif;
   font-size: 32px;
 }
 .wall-category-description {
-  font-family: sourceHanSerif;
+  font-family: sourceHanSerif, "Source Han Serif SC", "Songti SC", serif;
   text-align: center;
   margin: 10px 0;
 }
@@ -46,81 +58,22 @@
 }
 .wall-category-tags {
   width: 100%;
+  margin-top: 18px;
 }
 .wall-category-tags .tag {
   display: inline-block;
-  border: 1px solid #eee;
+  border: 1px solid #d8cfbd;
   border-radius: 50%;
   padding: 8px 10px;
   box-sizing: border-box;
 }
-.post-card,
-.post-card--sticky {
-  display: block;
-  margin: 30px 0;
-  padding: 20px;
-}
-.post-card--sticky,
-.post-card--sticky--sticky {
-  background: #fcfcfb;
-}
+/* ===================== 列表容器（网格见 _cards.styl） ===================== */
 .post-list {
-  max-width: 900px;
-  margin: 20px auto;
+  max-width: 1200px;
+  margin: 30px auto 90px;
+  padding: 0 50px;
 }
-.post-tags {
-  margin-top: 4px;
-}
-.post__head {
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-}
-.post-title {
-  text-decoration: none;
-  font-size: 24px;
-  font-weight: bold;
-}
-.post-title-pined {
-  font-size: 0.75em;
-  margin: 0 4px;
-  padding: 2px 4px;
-  border: 1px solid;
-  border-radius: 2px;
-  color: #4b0505;
-}
-.post__body {
-  display: flex;
-  align-items: stretch;
-}
-.post-cover {
-  display: block;
-  flex: 0 0 150px;
-  min-height: 100px;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  margin-right: 20px;
-  border-radius: 2px;
-}
-.post-excerpt {
-  flex: 1;
-  color: #666;
-}
-.post-excerpt * {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 1.75em;
-}
-.post__foot {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-}
-.text-link {
-  display: inline-flex;
-  align-items: center;
-}
+/* ===================== 标签云 / 标签页 ===================== */
 #tagCanvas {
   display: block;
   width: 100%;
@@ -129,28 +82,165 @@
 }
 .tag-page-title {
   margin: 0 auto;
-  max-width: 900px;
+  max-width: 1200px;
+  font-family: sourceHanSerif, "Source Han Serif SC", "Songti SC", serif;
   font-size: 40px;
-  padding: 80px 0 20px;
-  font-family: sourceSans, sourceHanSerif;
+  padding: 80px 50px 20px;
+  color: #20201d;
+}
+/* ===================== 分页 ===================== */
+.paginator {
+  justify-content: center;
+  margin-top: 50px;
 }
 @media screen and (max-width: 1023px) {
-  .wall-category .tag-page-title {
-    padding-left: 30px;
-    padding-right: 30px;
+  .wall-category--plain {
+    padding: 50px 24px 0;
   }
-  .wall-category .post-list {
-    padding: 0 10px;
+  .post-list {
+    padding: 0 24px;
+  }
+  .tag-page-title {
+    padding-left: 24px;
+    padding-right: 24px;
   }
   .wall-category #tags-outer {
     padding-top: 30px;
   }
 }
-@media screen and (max-width: 415px) {
-  .post__body {
-    flex-direction: column;
+/* ===================== 空分类提示（非思考页） ===================== */
+.post-empty {
+  color: #6f6a5f;
+  font-family: sourceHanSerif, "Source Han Serif SC", "Songti SC", serif;
+  letter-spacing: 0.06em;
+  padding: 16px 0 40px;
+}
+.post-empty code {
+  background: rgba(32,32,29,0.06);
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+/* ===================== 观心墨池（思考页） ===================== */
+.pond {
+  max-width: 1200px;
+  margin: 6px auto 56px;
+  padding: 0 50px;
+}
+.pond-water {
+  position: relative;
+  min-height: 54vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 8px;
+  user-select: none;
+  -webkit-user-select: none;
+  background: radial-gradient(68% 58% at 50% 48%, rgba(74,97,92,0.07), rgba(74,97,92,0) 70%), radial-gradient(130% 100% at 50% 122%, rgba(32,32,29,0.06), rgba(32,32,29,0) 62%);
+}
+.ripple-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.ripple {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid #4a615c;
+  transform: translate(-50%, -50%) scale(0.2);
+  opacity: 0;
+  animation: pondRipple 2s cubic-bezier(0.2, 0.6, 0.3, 1) forwards;
+}
+.pond-verse {
+  position: relative;
+  z-index: 1;
+  font-family: sourceHanSerif, "Source Han Serif SC", "Songti SC", serif;
+  font-size: clamp(22px, 3.4vw, 40px);
+  line-height: 1.95;
+  letter-spacing: 0.16em;
+  color: #20201d;
+  text-align: center;
+  transition: opacity 460ms ease, transform 460ms ease;
+  -webkit-box-reflect: below 6px linear-gradient(transparent 55%, rgba(32,32,29,0.1));
+}
+.pond-verse.is-fading {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.pond-verse__line {
+  display: block;
+}
+.pond-seal {
+  position: relative;
+  z-index: 1;
+  margin-top: 28px;
+  width: 50px;
+  height: 50px;
+  font-size: 26px;
+}
+.pond-hint {
+  position: relative;
+  z-index: 1;
+  margin-top: 20px;
+  font-family: sourceHanSerif, "Source Han Serif SC", "Songti SC", serif;
+  font-size: 13px;
+  letter-spacing: 0.34em;
+  color: #948d7e;
+}
+@media screen and (max-width: 1023px) {
+  .pond {
+    padding: 0 24px;
   }
-  .post-cover {
-    margin: 10px 0;
+}
+@media screen and (max-width: 720px) {
+  .pond-water {
+    min-height: 62vh;
+  }
+  .pond-verse {
+    letter-spacing: 0.1em;
+  }
+}
+@-moz-keyframes pondRipple {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0.45;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(15);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes pondRipple {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0.45;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(15);
+    opacity: 0;
+  }
+}
+@-o-keyframes pondRipple {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0.45;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(15);
+    opacity: 0;
+  }
+}
+@keyframes pondRipple {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0.45;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(15);
+    opacity: 0;
   }
 }

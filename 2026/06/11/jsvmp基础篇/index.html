@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf8"/>
+    <script>
+      (function(){
+        var t = localStorage.getItem('theme');
+        if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
+    
+    <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+    <title>
+      
+        jsvmp基础篇 | PokerS
+      
+    </title>
+    <meta name="description" content="PokerS 的水墨札记 —— Web 逆向、AST 反混淆与自动化"/>
+    <meta name="keywords" content="Web逆向,JS逆向,AST反混淆,爬虫,自动化,PokerS"/>
+    
+      <link rel="apple-touch-icon"
+            sizes="180x180"
+            href="/images/apple-touch-icon.png"/>
+    
+    
+      <link rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/images/favicon-32x32.png"/>
+    
+    
+      <link rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/images/favicon-16x16.png"/>
+    
+    
+      <link rel="mask-icon"
+            href="/images/logo.svg"
+            color=""/>
+    
+    
+    
+      
+  <style>
+    @font-face {
+        font-family:sourceHanSerif;
+        src: url(/font/normal.ttf);
+        font-weight: normal;
+    }
+  </style>
+
+  <style>
+    @font-face {
+        font-family:sourceHanSerif;
+        src: url(/font/bold.ttf);
+        font-weight: bold;
+    }
+  </style>
+
+
+    
+    <link rel="stylesheet"
+          type="text/css"
+          href='/css/layout.css'/>
+    
+    
+  <link rel="stylesheet" type="text/css" href="/css/post.css"/>
+  
+
+  <meta name="generator" content="Hexo 8.1.1"></head>
+  <body>
+    
+
+<svg class="ink-defs" width="0" height="0" aria-hidden="true" focusable="false"
+     style="position:absolute;width:0;height:0;overflow:hidden">
+  <defs>
+    
+    <filter id="ink-bleed" x="-25%" y="-25%" width="150%" height="150%"
+            filterUnits="objectBoundingBox" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.013 0.021"
+                    numOctaves="2" seed="7" stitchTiles="stitch" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="5"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    
+    <filter id="ink-bleed-soft" x="-20%" y="-20%" width="140%" height="140%"
+            filterUnits="objectBoundingBox" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02 0.03"
+                    numOctaves="2" seed="3" stitchTiles="stitch" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"/>
+    
+    
+    <div class=head>
+      <div class="nav">
+        <a href='/' class="nav-logo">
+          <img alt="logo" height="60px" width="60px" src="/images/logo.svg"/>
+        </a>
+        <input id="navBtn" type="checkbox"/>
+        <div class="nav-right">
+          
+            <div class="search-outer" id="algolia-search"></div>
+          
+          <div class="nav-menu">
+            
+              
+                <a class="nav-menu-item" href="/feat">文章</a>
+              
+                <a class="nav-menu-item" href="/base">思考</a>
+              
+            
+            
+              <a class="nav-menu-item" href='/cv/'>关于我</a>
+            
+          </div>
+          <button class="theme-toggle" id="themeToggle" aria-label="切换主题"></button>
+        </div>
+        <label class="nav-btn" for="navBtn"></label>
+      </div>
+    </div>
+    <div class="body">
+      
+  <div class="read-progress" aria-hidden="true"><span class="read-progress__bar" id="readProgressBar"></span></div>
+  <article class="post-content">
+    <div class="post-shell">
+
+      
+      <aside class="post-rail post-rail--left" aria-hidden="true">
+        <div class="rail-sticky">
+          <span class="rail-seal ink-seal">j</span>
+          <span class="rail-vtitle">jsvmp基础篇</span>
+          <span class="rail-meta">2026 · 06 · 11</span>
+          <span class="rail-meta rail-meta--author">PokerS</span>
+          <svg class="rail-hill" viewBox="0 0 60 220" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path d="M30 0 L30 220" class="rail-hill__line"/>
+            <path d="M8 210 C20 150 26 150 30 120 C34 150 40 150 52 210 Z" class="rail-hill__peak"/>
+          </svg>
+        </div>
+      </aside>
+
+      
+      <div class="post-main">
+        <div class="post-content__head">
+          <div class="post-title">jsvmp基础篇</div>
+          <svg class="post-title__brush ink-art" viewBox="0 0 120 14" aria-hidden="true" focusable="false">
+            <path class="ink-stroke" data-stroke-order="0" filter="url(#ink-bleed-soft)"
+                  fill="none" stroke-width="4" stroke-linecap="round"
+                  d="M2 9 C28 3 60 3 86 7 C100 9 110 8 118 5"/>
+          </svg>
+          <div class="post-info">
+            
+  
+
+
+            <span class="post-date">2026-06-11</span>
+          </div>
+        </div>
+
+        
+        <details class="post-toc-inline">
+          <summary>目录</summary>
+          <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#jsvmp%E5%9F%BA%E7%A1%80%E7%AF%87"><span class="post-toc-text">jsvmp基础篇</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AFjsvmp"><span class="post-toc-text">一、什么是jsvmp</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BE%E4%BE%8B%E8%AF%B4%E6%98%8Ejsvmp%E7%AE%80%E5%8D%95%E8%BF%90%E8%BD%AC%E9%80%BB%E8%BE%91"><span class="post-toc-text">二、举例说明jsvmp简单运转逻辑</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E8%8A%82%E7%A0%81%E6%95%B0%E7%BB%84"><span class="post-toc-text">自定义字节码数组</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E9%83%A8%E5%88%86"><span class="post-toc-text">初始化部分</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#opcode"><span class="post-toc-text">opcode</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%A0%86%E6%A0%88%E6%93%8D%E4%BD%9C"><span class="post-toc-text">堆栈操作</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%B5%85%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D"><span class="post-toc-text">浅拷贝与深拷贝</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#opcode-handler"><span class="post-toc-text">opcode handler</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link"><span class="post-toc-text"></span></a></li></ol></li></ol>
+        </details>
+
+        <div class="post-content__body" id="postBody">
+          
+            <div class="post-gallery">
+              
+            </div>
+          
+          <h1 id="jsvmp基础篇"><a href="#jsvmp基础篇" class="headerlink" title="jsvmp基础篇"></a>jsvmp基础篇</h1><h2 id="一、什么是jsvmp"><a href="#一、什么是jsvmp" class="headerlink" title="一、什么是jsvmp"></a>一、什么是jsvmp</h2><p>JSVMP (Virtual Machine based code Protection for JavaScript) 作为一种先进的代码虚拟化保护方案，能够有效提升 JavaScript 代码的安全性。</p>
+<p>当然了，这是官话，通俗的来讲，JSVMP 是把原本可读的 JS 逻辑，转换成一套自定义虚拟机能识别的字节码，然后用一个 JS 写的解释器去执行这些字节码。</p>
+<p>这样说，可能也不太理解，于是，我们来通过一个简单的例子，看一看大概是一个什么感觉</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> username = <span class="string">&quot;admin&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> password = <span class="string">&quot;123456&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> loginTime = <span class="title class_">Date</span>.<span class="title function_">now</span>();</span><br><span class="line"><span class="keyword">var</span> userToken = username + <span class="string">&quot;_&quot;</span> + password;</span><br><span class="line"><span class="keyword">var</span> finalHash = <span class="title function_">btoa</span>(userToken + loginTime);</span><br><span class="line"><span class="variable language_">window</span>.<span class="property">authResult</span> = finalHash;</span><br></pre></td></tr></table></figure>
+
+<p>我们借用csdn上<a target="_blank" rel="noopener" href="https://blog.csdn.net/PengXing_Huang">d0ublecl1ck_</a>大佬的例子，用我们自定义的vm来举例，依次说明</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> constPool = [</span><br><span class="line">    <span class="string">&quot;admin&quot;</span>,</span><br><span class="line">    <span class="string">&quot;123456&quot;</span>,</span><br><span class="line">    <span class="string">&quot;_&quot;</span>,</span><br><span class="line">    <span class="string">&quot;authResult&quot;</span></span><br><span class="line">  ];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> stack = [];</span><br><span class="line">  <span class="keyword">var</span> regs = [];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> bytecode = [</span><br><span class="line">    <span class="number">0x01</span>, <span class="number">0</span>,   <span class="comment">// push constPool[0] =&gt; &quot;admin&quot;</span></span><br><span class="line">    <span class="number">0x02</span>, <span class="number">0</span>,   <span class="comment">// store regs[0]</span></span><br><span class="line"></span><br><span class="line">    <span class="number">0x01</span>, <span class="number">1</span>,   <span class="comment">// push constPool[1] =&gt; &quot;123456&quot;</span></span><br><span class="line">    <span class="number">0x02</span>, <span class="number">1</span>,   <span class="comment">// store regs[1]</span></span><br><span class="line"></span><br><span class="line">    <span class="number">0x03</span>,      <span class="comment">// Date.now()</span></span><br><span class="line">    <span class="number">0x02</span>, <span class="number">2</span>,   <span class="comment">// store regs[2]</span></span><br><span class="line"></span><br><span class="line">    <span class="number">0x04</span>, <span class="number">0</span>,   <span class="comment">// load regs[0]</span></span><br><span class="line">    <span class="number">0x01</span>, <span class="number">2</span>,   <span class="comment">// push &quot;_&quot;</span></span><br><span class="line">    <span class="number">0x05</span>,      <span class="comment">// add</span></span><br><span class="line">    <span class="number">0x04</span>, <span class="number">1</span>,   <span class="comment">// load regs[1]</span></span><br><span class="line">    <span class="number">0x05</span>,      <span class="comment">// add</span></span><br><span class="line">    <span class="number">0x02</span>, <span class="number">3</span>,   <span class="comment">// store regs[3]</span></span><br><span class="line"></span><br><span class="line">    <span class="number">0x04</span>, <span class="number">3</span>,   <span class="comment">// load userToken</span></span><br><span class="line">    <span class="number">0x04</span>, <span class="number">2</span>,   <span class="comment">// load loginTime</span></span><br><span class="line">    <span class="number">0x05</span>,      <span class="comment">// add</span></span><br><span class="line">    <span class="number">0x06</span>,      <span class="comment">// btoa()</span></span><br><span class="line">    <span class="number">0x02</span>, <span class="number">4</span>,   <span class="comment">// store regs[4]</span></span><br><span class="line"></span><br><span class="line">    <span class="number">0x04</span>, <span class="number">4</span>,   <span class="comment">// load finalHash</span></span><br><span class="line">    <span class="number">0x07</span>, <span class="number">3</span>,   <span class="comment">// window[constPool[3]] = value</span></span><br><span class="line"></span><br><span class="line">    <span class="number">0xff</span>       <span class="comment">// end</span></span><br><span class="line">  ];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> ip = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (ip &lt; bytecode.<span class="property">length</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> op = bytecode[ip++];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (op) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">0x01</span>: &#123;</span><br><span class="line">        <span class="keyword">var</span> index = bytecode[ip++];</span><br><span class="line">        stack.<span class="title function_">push</span>(constPool[index]);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> <span class="number">0x02</span>: &#123;</span><br><span class="line">        <span class="keyword">var</span> regIndex = bytecode[ip++];</span><br><span class="line">        regs[regIndex] = stack.<span class="title function_">pop</span>();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> <span class="number">0x03</span>: &#123;</span><br><span class="line">        stack.<span class="title function_">push</span>(<span class="title class_">Date</span>.<span class="title function_">now</span>());</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> <span class="number">0x04</span>: &#123;</span><br><span class="line">        <span class="keyword">var</span> regIndex = bytecode[ip++];</span><br><span class="line">        stack.<span class="title function_">push</span>(regs[regIndex]);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> <span class="number">0x05</span>: &#123;</span><br><span class="line">        <span class="keyword">var</span> b = stack.<span class="title function_">pop</span>();</span><br><span class="line">        <span class="keyword">var</span> a = stack.<span class="title function_">pop</span>();</span><br><span class="line">        stack.<span class="title function_">push</span>(<span class="title class_">String</span>(a) + <span class="title class_">String</span>(b));</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> <span class="number">0x06</span>: &#123;</span><br><span class="line">        <span class="keyword">var</span> value = stack.<span class="title function_">pop</span>();</span><br><span class="line">        stack.<span class="title function_">push</span>(<span class="title function_">btoa</span>(value));</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> <span class="number">0x07</span>: &#123;</span><br><span class="line">        <span class="keyword">var</span> propIndex = bytecode[ip++];</span><br><span class="line">        <span class="keyword">var</span> value = stack.<span class="title function_">pop</span>();</span><br><span class="line">        <span class="variable language_">window</span>[constPool[propIndex]] = value;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> <span class="number">0xff</span>:</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<p>先把源码放在这里，接下来，跟随我一起进入控制台来一步一步看，vm内究竟发生了什么</p>
+<h2 id="二、举例说明jsvmp简单运转逻辑"><a href="#二、举例说明jsvmp简单运转逻辑" class="headerlink" title="二、举例说明jsvmp简单运转逻辑"></a>二、举例说明jsvmp简单运转逻辑</h2><h3 id="自定义字节码数组"><a href="#自定义字节码数组" class="headerlink" title="自定义字节码数组"></a>自定义字节码数组</h3><p>首先断点打在<code>var ip = 0</code>上，然后鼠标移至bytecode的位置，我们看一下bytecode是什么，很明显，是上面写好的数组。于是，我们管这个数组，叫做字节码。更准确的说，它一组自定义 VM 指令序列 &#x2F; 自定义字节码数组。</p>
+<p>在这个案例中，为了便于观察，我们按照虚拟机的取指顺序和每条指令的参数结构，将字节码拆分成了多行并添加注释。但在真实 JSVMP 样本中，字节码通常是连续存储的，没有注释，也不会直观区分每条指令的边界。</p>
+<p>通常，会是这样的，<code>var bytecode = [1,0,2,0,1,1,2,1,3,2,2,4,0,1,2,5,4,1,5,2,3,4,3,4,2,5,6,2,4,4,4,7,3,255];</code>这也仅仅是六行代码做出来的指令序列。</p>
+<p><img src="D:\PokerS_blog\Hexo\source\图片\image-20260611124255457.png" alt="image-20260611124255457"></p>
+<h3 id="初始化部分"><a href="#初始化部分" class="headerlink" title="初始化部分"></a>初始化部分</h3><p>我们把部分源码提取出来，接下来的讲解在代码块中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">var</span> constPool = [</span><br><span class="line">    <span class="string">&quot;admin&quot;</span>,</span><br><span class="line">    <span class="string">&quot;123456&quot;</span>,</span><br><span class="line">    <span class="string">&quot;_&quot;</span>,</span><br><span class="line">    <span class="string">&quot;authResult&quot;</span></span><br><span class="line">  ];<span class="comment">//首先，我们定义了一个常量池，这通常是用来集中存放程序运行时会用到的固定值。但并不是所有jsvmp都这么处理固定值部分的。处理这些固定值的方法有许多，固定值可能被加密、拆分、内联到字节码中，或者在运行时动态生成。这里只是为了举例，所以很简单。</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> stack = [];<span class="comment">//这里我们定义了一个数组 stack，用来模拟虚拟机的操作数栈，也可以叫工作栈。在 VM 执行字节码的过程中，很多指令都会把数据压入栈中，或者从栈中弹出数据进行计算。后续运行过程中，我们会重点观察每条指令是如何对这个工作栈进行入栈、出栈和取值操作的。</span></span><br><span class="line">  <span class="keyword">var</span> regs = [];<span class="comment">//寄存器数组，用于保存虚拟机运行过程中的中间变量或局部变量。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//注意！以上两个变量，在真实jsvmp中，大多数以单个字母，或者混淆变量名出现。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> bytecode = [<span class="number">0x01</span>,<span class="number">0</span>,<span class="number">0x02</span>,<span class="number">0</span>,<span class="number">0x01</span>,<span class="number">1</span>,<span class="number">0x02</span>,<span class="number">1</span>,<span class="number">0x03</span>,<span class="number">0x02</span>,<span class="number">2</span>,<span class="number">0x04</span>,<span class="number">0</span>,<span class="number">0x01</span>,<span class="number">2</span>,<span class="number">0x05</span>,<span class="number">0x04</span>, <span class="number">1</span>,<span class="number">0x05</span>,<span class="number">0x02</span>,<span class="number">3</span>,<span class="number">0x04</span>,<span class="number">3</span>,<span class="number">0x04</span>,<span class="number">2</span>,<span class="number">0x05</span>,<span class="number">0x06</span>,<span class="number">0x02</span>,<span class="number">4</span>,<span class="number">0x04</span>,<span class="number">4</span>,<span class="number">0x07</span>,<span class="number">3</span>,<span class="number">0xff</span>];<span class="comment">//自定义字节码数组</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> ip = <span class="number">0</span>;<span class="comment">//起始坐标，我们也可以叫指针，因为它起的就是指针的作用，那么通俗的来讲，它会告诉程序，现在我们走到了字节码数组中的哪一个位置了。当然在这里还是要说，各个jsvmp中的表现方式不同，要注意观察</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="opcode"><a href="#opcode" class="headerlink" title="opcode"></a>opcode</h3><p>紧接着，我们按照代码顺序向下分析，一个while循环，在ip没走完的时候，一直执行。</p>
+<p><code>var op = bytecode[ip++];</code>这样读出来的 <code>op</code> 叫 <strong>opcode</strong>。<code>operation code</code>，<strong>操作码</strong>，也就是“这条指令要做什么操作”的编号。</p>
+<p>如果您刚接触jsvmp，那就会隐隐有这种疑惑。</p>
+<blockquote>
+<p>VM 是怎么知道当前读出来的这个数字是“操作码”，而不是“参数值”的？<br>为什么 <code>0x01</code> 就一定对应 <code>push const</code>，而不是别的意思？</p>
+</blockquote>
+<p>这都是因为，我们已经提前约定好的“指令格式”————&gt;字节码数组</p>
+<p>字节码数组通过ip走到了哪里，自然就会知道现在该干什么。冥冥之中，自有安排~</p>
+<p>好，那我认为，我已经说明白了<code>var op = bytecode[ip++];</code>这行代码，简单来说，就是告诉程序，现在该执行哪个操作了。</p>
+<h3 id="堆栈操作"><a href="#堆栈操作" class="headerlink" title="堆栈操作"></a>堆栈操作</h3><p>在学习核心知识之前，先在这里，为大家提前补习一些基础知识。</p>
+<h4 id="入栈与出栈"><a href="#入栈与出栈" class="headerlink" title="入栈与出栈"></a>入栈与出栈</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> stack = [];</span><br><span class="line">stack.<span class="title function_">push</span>(<span class="number">10</span>)<span class="comment">//stack = [10]</span></span><br><span class="line">stack.<span class="title function_">push</span>(<span class="number">20</span>)<span class="comment">//stack = [10,20]</span></span><br><span class="line">stack.<span class="title function_">pop</span>()<span class="comment">//stack = [10]</span></span><br><span class="line"><span class="keyword">var</span> value = stack.<span class="title function_">pop</span>();<span class="comment">//value = 10   stack = []</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="查看栈顶"><a href="#查看栈顶" class="headerlink" title="查看栈顶"></a>查看栈顶</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">stack = [<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>]</span><br><span class="line"><span class="keyword">var</span> top = stack[stack.<span class="property">length</span> - <span class="number">1</span>];<span class="comment">//top = 30</span></span><br><span class="line"><span class="comment">//这种操作是只查看，不删除</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="其他的一些基础操作"><a href="#其他的一些基础操作" class="headerlink" title="其他的一些基础操作"></a>其他的一些基础操作</h4><h5 id="反转数组"><a href="#反转数组" class="headerlink" title="反转数组"></a>反转数组</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">stack = [<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>]</span><br><span class="line">stack.<span class="title function_">reverse</span>();<span class="comment">// stack = [30,20,10]</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="从数组开头取元素"><a href="#从数组开头取元素" class="headerlink" title="从数组开头取元素"></a>从数组开头取元素</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">stack = [<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>]</span><br><span class="line"><span class="keyword">var</span> value = stack.<span class="title function_">shift</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(value); <span class="comment">// 10</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(stack); <span class="comment">// [20, 30]</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="往数组开头插入一个值"><a href="#往数组开头插入一个值" class="headerlink" title="往数组开头插入一个值"></a>往数组<strong>开头</strong>插入一个值</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">stack = [<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>]</span><br><span class="line">stack.<span class="title function_">unshift</span>(<span class="literal">null</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(stack); <span class="comment">// [null, 10, 20, 30]</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="截取数组，不修改原数组"><a href="#截取数组，不修改原数组" class="headerlink" title="截取数组，不修改原数组"></a>截取数组，不修改原数组</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> stack = [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> part = arr.<span class="title function_">slice</span>(<span class="number">1</span>, <span class="number">3</span>);<span class="comment">//左闭右开</span></span><br><span class="line"><span class="keyword">var</span> copy = stack.<span class="title function_">slice</span>(<span class="number">0</span>)<span class="comment">//浅拷贝</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(part); <span class="comment">// [20, 30]</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr);  <span class="comment">// [10, 20, 30, 40]</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(copy);<span class="comment">//[10, 20, 30, 40]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="浅拷贝与深拷贝"><a href="#浅拷贝与深拷贝" class="headerlink" title="浅拷贝与深拷贝"></a>浅拷贝与深拷贝</h3><blockquote>
+<p>浅拷贝：只复制外层，里面对象还共用。<br>深拷贝：外层和里面嵌套内容都重新复制。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//浅拷贝</span></span><br><span class="line"><span class="keyword">var</span> a = [&#123; <span class="attr">name</span>: <span class="string">&quot;admin&quot;</span> &#125;];</span><br><span class="line"><span class="keyword">var</span> b = a.<span class="title function_">slice</span>(<span class="number">0</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b); <span class="comment">// [&#123; name: &quot;admin&quot; &#125;]</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a === b); <span class="comment">// false</span></span><br><span class="line"><span class="comment">//a 和 b 不是同一个数组</span></span><br><span class="line"><span class="comment">//但是数组里的对象还是同一个</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a[<span class="number">0</span>] === b[<span class="number">0</span>]); <span class="comment">// true</span></span><br><span class="line">b[<span class="number">0</span>].<span class="property">name</span> = <span class="string">&quot;test&quot;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a[<span class="number">0</span>].<span class="property">name</span>); <span class="comment">// test</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//深拷贝</span></span><br><span class="line"><span class="keyword">var</span> a = [&#123; <span class="attr">name</span>: <span class="string">&quot;admin&quot;</span> &#125;];</span><br><span class="line"><span class="keyword">var</span> b = <span class="title function_">structuredClone</span>(a);</span><br><span class="line">b[<span class="number">0</span>].<span class="property">name</span> = <span class="string">&quot;test&quot;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a[<span class="number">0</span>].<span class="property">name</span>); <span class="comment">// admin</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b[<span class="number">0</span>].<span class="property">name</span>); <span class="comment">// test</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a === b);       <span class="comment">// false</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a[<span class="number">0</span>] === b[<span class="number">0</span>]); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="opcode-handler"><a href="#opcode-handler" class="headerlink" title="opcode handler"></a>opcode handler</h3><p>有了以上的基础知识，我们终于可以学习核心部分</p>
+<p>那么接下来，就是<code>switch</code> 里面每个 <code>case</code> 对应的代码块</p>
+<blockquote>
+<p><strong>opcode handler</strong><br>操作码处理逻辑 &#x2F; 指令处理器</p>
+</blockquote>
+<p>同时，我们把字节码数组也拿到，这样大家就能边看处理顺序，边理解操作码的处理逻辑了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> bytecode = [</span><br><span class="line">    <span class="number">0x01</span>, <span class="number">0</span>,   <span class="comment">// push constPool[0] =&gt; &quot;admin&quot;</span></span><br><span class="line">    <span class="number">0x02</span>, <span class="number">0</span>,   <span class="comment">// store regs[0]</span></span><br><span class="line"></span><br><span class="line">    <span class="number">0x01</span>, <span class="number">1</span>,   <span class="comment">// push constPool[1] =&gt; &quot;123456&quot;</span></span><br><span class="line">    <span class="number">0x02</span>, <span class="number">1</span>,   <span class="comment">// store regs[1]</span></span><br><span class="line"></span><br><span class="line">    <span class="number">0x03</span>,      <span class="comment">// Date.now()</span></span><br><span class="line">    <span class="number">0x02</span>, <span class="number">2</span>,   <span class="comment">// store regs[2]</span></span><br><span class="line"></span><br><span class="line">    <span class="number">0x04</span>, <span class="number">0</span>,   <span class="comment">// load regs[0]</span></span><br><span class="line">    <span class="number">0x01</span>, <span class="number">2</span>,   <span class="comment">// push &quot;_&quot;</span></span><br><span class="line">    <span class="number">0x05</span>,      <span class="comment">// add</span></span><br><span class="line">    <span class="number">0x04</span>, <span class="number">1</span>,   <span class="comment">// load regs[1]</span></span><br><span class="line">    <span class="number">0x05</span>,      <span class="comment">// add</span></span><br><span class="line">    <span class="number">0x02</span>, <span class="number">3</span>,   <span class="comment">// store regs[3]</span></span><br><span class="line"></span><br><span class="line">    <span class="number">0x04</span>, <span class="number">3</span>,   <span class="comment">// load userToken</span></span><br><span class="line">    <span class="number">0x04</span>, <span class="number">2</span>,   <span class="comment">// load loginTime</span></span><br><span class="line">    <span class="number">0x05</span>,      <span class="comment">// add</span></span><br><span class="line">    <span class="number">0x06</span>,      <span class="comment">// btoa()</span></span><br><span class="line">    <span class="number">0x02</span>, <span class="number">4</span>,   <span class="comment">// store regs[4]</span></span><br><span class="line"></span><br><span class="line">    <span class="number">0x04</span>, <span class="number">4</span>,   <span class="comment">// load finalHash</span></span><br><span class="line">    <span class="number">0x07</span>, <span class="number">3</span>,   <span class="comment">// window[constPool[3]] = value</span></span><br><span class="line"></span><br><span class="line">    <span class="number">0xff</span>       <span class="comment">// end</span></span><br><span class="line">  ];</span><br></pre></td></tr></table></figure>
+
+<p>我们就以第一次的操作举例<code>0x01, 0</code>，意思是去<code>case 0x01</code>的地方。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="number">0x01</span>: &#123;</span><br><span class="line">    	<span class="comment">//在第一次操作的时候，我们的ip已经在var op = bytecode[ip++];这里自增过了，此时id=1</span></span><br><span class="line">        <span class="keyword">var</span> index = bytecode[ip++];<span class="comment">//index = bytecode[1] = 0</span></span><br><span class="line">    <span class="comment">//而后，ip++ -&gt;ip = 2</span></span><br><span class="line">        stack.<span class="title function_">push</span>(constPool[index]);</span><br><span class="line">    <span class="comment">//将常量池中的第0号元素admin，入栈</span></span><br><span class="line">    <span class="comment">//此时stack = [&#x27;admin&#x27;]</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们继续示例，以便于大家彻底理解stack工作栈的用途</p>
+<p>紧接着，<code>0x02, 0</code>，意思是去<code>case 0x02</code>的地方</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="number">0x02</span>: &#123;</span><br><span class="line">    <span class="comment">//ip已经在var op = bytecode[ip++];这里自增过了，此时id=3</span></span><br><span class="line">       <span class="keyword">var</span> regIndex = bytecode[ip++];<span class="comment">//regIndex = bytecode[3] = 0</span></span><br><span class="line">    <span class="comment">//而后，ip++ -&gt;ip = 4</span></span><br><span class="line">       regs[regIndex] = stack.<span class="title function_">pop</span>();</span><br><span class="line">    <span class="comment">//regs[0] = &#x27;admin&#x27;</span></span><br><span class="line">    <span class="comment">//此时stack = []</span></span><br><span class="line">       <span class="keyword">break</span>;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来，我就不一一举例了，感兴趣的话可以继续模拟下去，在这里我们直接给出stack的变化</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>指令</th>
+<th>操作</th>
+<th>stack 变化</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><code>0x01, 0</code></td>
+<td>push <code>&quot;admin&quot;</code></td>
+<td><code>[&quot;admin&quot;]</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>0x02, 0</code></td>
+<td>pop，存入 <code>regs[0]</code></td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>0x01, 1</code></td>
+<td>push <code>&quot;123456&quot;</code></td>
+<td><code>[&quot;123456&quot;]</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>0x02, 1</code></td>
+<td>pop，存入 <code>regs[1]</code></td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>0x03</code></td>
+<td>push <code>Date.now()</code></td>
+<td><code>[T]</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>0x02, 2</code></td>
+<td>pop，存入 <code>regs[2]</code></td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>0x04, 0</code></td>
+<td>push <code>regs[0]</code></td>
+<td><code>[&quot;admin&quot;]</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>0x01, 2</code></td>
+<td>push <code>&quot;_&quot;</code></td>
+<td><code>[&quot;admin&quot;, &quot;_&quot;]</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>0x05</code></td>
+<td>pop 两个值，相加</td>
+<td><code>[&quot;admin_&quot;]</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>0x04, 1</code></td>
+<td>push <code>regs[1]</code></td>
+<td><code>[&quot;admin_&quot;, &quot;123456&quot;]</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>0x05</code></td>
+<td>pop 两个值，相加</td>
+<td><code>[&quot;admin_123456&quot;]</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>0x02, 3</code></td>
+<td>pop，存入 <code>regs[3]</code></td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>0x04, 3</code></td>
+<td>push <code>regs[3]</code></td>
+<td><code>[&quot;admin_123456&quot;]</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>0x04, 2</code></td>
+<td>push <code>regs[2]</code></td>
+<td><code>[&quot;admin_123456&quot;, T]</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>0x05</code></td>
+<td>pop 两个值，相加</td>
+<td><code>[&quot;admin_123456&quot; + T]</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>0x06</code></td>
+<td>pop，执行 <code>btoa()</code>，再 push</td>
+<td><code>[H]</code></td>
+</tr>
+<tr>
+<td>17</td>
+<td><code>0x02, 4</code></td>
+<td>pop，存入 <code>regs[4]</code></td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>18</td>
+<td><code>0x04, 4</code></td>
+<td>push <code>regs[4]</code></td>
+<td><code>[H]</code></td>
+</tr>
+<tr>
+<td>19</td>
+<td><code>0x07, 3</code></td>
+<td>pop，赋值给 <code>window.authResult</code></td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td><code>0xff</code></td>
+<td>结束</td>
+<td><code>[]</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (ip &lt; bytecode.<span class="property">length</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> op = bytecode[ip++];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (op) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">0x01</span>: &#123;</span><br><span class="line">        <span class="keyword">var</span> index = bytecode[ip++];</span><br><span class="line">        stack.<span class="title function_">push</span>(constPool[index]);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> <span class="number">0x02</span>: &#123;</span><br><span class="line">        <span class="keyword">var</span> regIndex = bytecode[ip++];</span><br><span class="line">        regs[regIndex] = stack.<span class="title function_">pop</span>();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> <span class="number">0x03</span>: &#123;</span><br><span class="line">        stack.<span class="title function_">push</span>(<span class="title class_">Date</span>.<span class="title function_">now</span>());</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> <span class="number">0x04</span>: &#123;</span><br><span class="line">        <span class="keyword">var</span> regIndex = bytecode[ip++];</span><br><span class="line">        stack.<span class="title function_">push</span>(regs[regIndex]);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> <span class="number">0x05</span>: &#123;</span><br><span class="line">        <span class="keyword">var</span> b = stack.<span class="title function_">pop</span>();</span><br><span class="line">        <span class="keyword">var</span> a = stack.<span class="title function_">pop</span>();</span><br><span class="line">        stack.<span class="title function_">push</span>(<span class="title class_">String</span>(a) + <span class="title class_">String</span>(b));</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> <span class="number">0x06</span>: &#123;</span><br><span class="line">        <span class="keyword">var</span> value = stack.<span class="title function_">pop</span>();</span><br><span class="line">        stack.<span class="title function_">push</span>(<span class="title function_">btoa</span>(value));</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> <span class="number">0x07</span>: &#123;</span><br><span class="line">        <span class="keyword">var</span> propIndex = bytecode[ip++];</span><br><span class="line">        <span class="keyword">var</span> value = stack.<span class="title function_">pop</span>();</span><br><span class="line">        <span class="variable language_">window</span>[constPool[propIndex]] = value;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> <span class="number">0xff</span>:</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以我们可以看到，这段 VM 的核心并不是浏览器直接执行原始业务逻辑，而是通过 <code>bytecode + opcode handler + stack/regs</code> 的方式，把原始逻辑重新解释执行了一遍。</p>
+<p>相信看到这里，大家应该大致明白jsvmp的工作流程了。在下一篇文章中，我们会以一个真实案例，来讲解jsvmp。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
+        </div>
+      </div>
+
+      
+      <aside class="post-rail post-rail--right">
+        <div class="rail-sticky">
+          <div class="toc-title">目录</div>
+          <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#jsvmp%E5%9F%BA%E7%A1%80%E7%AF%87"><span class="post-toc-text">jsvmp基础篇</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AFjsvmp"><span class="post-toc-text">一、什么是jsvmp</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BE%E4%BE%8B%E8%AF%B4%E6%98%8Ejsvmp%E7%AE%80%E5%8D%95%E8%BF%90%E8%BD%AC%E9%80%BB%E8%BE%91"><span class="post-toc-text">二、举例说明jsvmp简单运转逻辑</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E8%8A%82%E7%A0%81%E6%95%B0%E7%BB%84"><span class="post-toc-text">自定义字节码数组</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E9%83%A8%E5%88%86"><span class="post-toc-text">初始化部分</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#opcode"><span class="post-toc-text">opcode</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%A0%86%E6%A0%88%E6%93%8D%E4%BD%9C"><span class="post-toc-text">堆栈操作</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%B5%85%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D"><span class="post-toc-text">浅拷贝与深拷贝</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#opcode-handler"><span class="post-toc-text">opcode handler</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link"><span class="post-toc-text"></span></a></li></ol></li></ol>
+          <button type="button" class="toc-top" id="tocTop">回到顶部</button>
+        </div>
+      </aside>
+
+    </div>
+    
+      <script src='https://unpkg.com/mermaid@latest/dist/mermaid.min.js'></script>
+      <script>
+        if (window.mermaid) {
+          mermaid.initialize({"startOnload":true});
+        }
+      </script>
+    
+  </article>
+  <div class="post__foot">
+    
+      <div class="like-author">
+  <input type="checkbox" id="likeCode" />
+  <div class="author-face">
+    <img height="100px"
+         width="100px"
+         id="front-face"
+         alt="author face"
+         src="/assets/author-face.jpg" />
+    <img height="100px"
+         width="100px"
+         id="back-face"
+         alt="like code"
+         src="/assets/pay-code.jpg" />
+  </div>
+  <div class="like-text">“给作者倒杯卡布奇诺”</div>
+  <label for="likeCode" class="like-btn">
+    <svg viewBox="0 0 1024 1024"
+         width="20px"
+         style="margin-right: 10px"
+         height="20px">
+      <path d="M466.88 908.96L113.824 563.296a270.08 270.08 0 0 1 0-387.392c108.8-106.56 284.896-106.56 393.696 0 1.504 1.472 2.976 2.944 4.448 4.48 1.472-1.536 2.944-3.008 4.448-4.48 108.8-106.56 284.896-106.56 393.696 0a269.952 269.952 0 0 1 34.016 347.072l-387.392 385.6a64 64 0 0 1-89.92 0.384z" p-id="13650" fill="#ee4242" />
+    </svg>
+    喜欢作者
+  </label>
+</div>
+
+    
+    <div class="post-nav">
+  
+    <a class="post-nav-item-left" href="/2026/06/11/jsvmp%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B/">
+      <div class="text-align">
+        <svg t="1670570876164"
+             class="icon"
+             viewBox="0 0 1024 1024"
+             width="16"
+             height="16">
+          <path d="M384 512L731.733333 202.666667c17.066667-14.933333 19.2-42.666667 4.266667-59.733334-14.933333-17.066667-42.666667-19.2-59.733333-4.266666l-384 341.333333c-10.666667 8.533333-14.933333 19.2-14.933334 32s4.266667 23.466667 14.933334 32l384 341.333333c8.533333 6.4 19.2 10.666667 27.733333 10.666667 12.8 0 23.466667-4.266667 32-14.933333 14.933333-17.066667 14.933333-44.8-4.266667-59.733334L384 512z" p-id="14596" />
+        </svg>
+        <span class="text-small">上一篇</span>
+      </div>
+      <div>tencent滑块——jsvmp实战</div>
+    </a>
+  
+  <div class="vhr"></div>
+  
+    <a class="post-nav-item-right" href="/2026/06/09/ddddocr-trainer%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/">
+      <div class="text-align">
+        <span class="text-small">下一篇</span>
+        <svg t="1670570876164"
+             class="icon"
+             viewBox="0 0 1024 1024"
+             transform="scale(-1,-1)"
+             width="16"
+             height="16">
+          <path d="M384 512L731.733333 202.666667c17.066667-14.933333 19.2-42.666667 4.266667-59.733334-14.933333-17.066667-42.666667-19.2-59.733333-4.266666l-384 341.333333c-10.666667 8.533333-14.933333 19.2-14.933334 32s4.266667 23.466667 14.933334 32l384 341.333333c8.533333 6.4 19.2 10.666667 27.733333 10.666667 12.8 0 23.466667-4.266667 32-14.933333 14.933333-17.066667 14.933333-44.8-4.266667-59.733334L384 512z" p-id="14596" />
+        </svg>
+      </div>
+      ddddocr-trainer训练模型
+    </a>
+  
+</div>
+
+    
+      <div class="related-post">
+  <div class="related__head">
+  
+
+</div>
+  <div class="realated__body">
+    
+      <div class="null"><div class="null-item"><div class="null-title"><a href="\2026\05\29\ast反混淆之常用api的使用\" title="ast反混淆之常用api的使用" rel="bookmark">ast反混淆之常用api的使用</a></div></div><div class="null-item"><div class="null-title"><a href="\2026\06\12\丰巢滑块\" title="丰巢滑块纯算" rel="bookmark">丰巢滑块纯算</a></div></div></div>
+    
+  </div>
+</div>
+
+    
+    
+  </div>
+
+    </div>
+    <div class="foot">
+  <div class="foot-inner">
+    <div class="foot__head">
+      
+        <div class="foot-line">
+          <div class="matts">师</div><div class="matts">出</div><div class="matts">猿</div><div class="matts">人</div><div class="matts">学</div>
+        </div>
+      
+        <div class="foot-line">
+          <div class="matts">欢</div><div class="matts">迎</div><div class="matts">来</div><div class="matts">加</div><div class="matts">入</div>
+        </div>
+      
+    </div>
+    <div class="foot__body">
+      
+        <div class="foot-item">
+          <div class="foot-item__head">朋友</div>
+          <div class="foot-item__body">
+            
+            
+
+
+  
+  
+    <div class="foot-link-group">
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/icon/icon-link.svg" />
+            <a class="foot-link" target="_blank" rel="noopener" href="https://github.com/poker-S/poker-S.github.io">Theme Tranquility</a>
+          </div>
+        
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/icon/icon-link.svg" />
+            <a class="foot-link" href="https://poker-S.github.io">PokerS的主页</a>
+          </div>
+        
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/icon/icon-link+.svg" />
+            <a class="foot-link" href="mailto:zongyatong@gmail.com?subject=申请https://poker-s.github.io的友链">申请友链</a>
+          </div>
+        
+      
+        
+        
+      
+    </div>
+  
+
+
+          </div>
+        </div>
+      
+      
+        <div class="foot-item">
+          <div class="foot-item__head">账号</div>
+          <div class="foot-item__body">
+            
+
+
+  
+  
+    <div class="foot-link-group">
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/logo-github.svg" />
+            <a class="foot-link" target="_blank" rel="noopener" href="https://github.com/poker-S">Poker-S</a>
+          </div>
+        
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/logo-wx.svg" />
+            <a class="foot-link" target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dd71iLOnQWq_55hnX0F7Ow">虫队长</a>
+          </div>
+        
+      
+        
+        
+      
+        
+        
+      
+    </div>
+  
+
+
+          </div>
+        </div>
+      
+      <div class="foot-item">
+        <div class="foot-item__head">联系</div>
+        <div class="foot-item__body">
+          
+
+
+  
+  
+    <div class="foot-link-group">
+      
+        
+        
+          <div class="text">
+            <img alt="link"
+                 height="20px"
+                 width="20px"
+                 src="/images/icon/icon-email.svg" />
+            <a class="foot-link" href="">180004584@qq.com</a>
+          </div>
+        
+      
+        
+        
+      
+        
+        
+      
+        
+        
+      
+    </div>
+  
+
+
+        </div>
+      </div>
+    </div>
+    <div class="copyright">
+      <a href="https://poker-s.github.io">PokerS</a> &nbsp;|&nbsp;由&nbsp;<a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>&nbsp;及&nbsp;
+      <svg width="20" height="20" viewBox="0 0 725 725">
+        <path fill-rule="evenodd" fill="rgb(221, 221, 221)" d="M145.870,236.632 L396.955,103.578 L431.292,419.44 L156.600,522.53 L145.870,236.632 Z" />
+        <path fill-rule="evenodd" fill="rgb(159, 159, 159)" d="M396.955,103.578 L564.345,234.486 L611.558,513.469 L431.292,419.44 L396.955,103.578 Z" />
+        <path fill-rule="evenodd" fill="rgb(0, 0, 0)" d="M431.292,419.44 L611.558,513.469 L358.327,595.18 L156.600,522.53 L431.292,419.44 Z" />
+      </svg>
+      <a target="_blank" rel="noopener" href="https://github.com/hooozen/hexo-theme-tranquility">致远</a>&nbsp;驱动
+    </div>
+  </div>
+</div>
+
+    
+    
+      <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
+      <script type="text/javascript">
+        docsearch({
+          appId: 'appId',
+          apiKey: 'apiKey',
+          indexName: 'indexName',
+          insights: 'true',
+          container: 'div#algolia-search',
+          debug: 'false'
+        });
+      </script>
+    
+    <script src="/js/copy-code.js"></script>
+    <script src="/js/dark-mode.js"></script>
+    <script src="/js/ink.js"></script>
+    
+  <script src="/js/toc.js"></script>
+  
+
+  </body>
+</html>
